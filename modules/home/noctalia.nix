@@ -20,7 +20,11 @@
         };
 
         wallpaper = {
-          directory = dfRoot + /pictures/yosemite.jpg;
+          enabled = true;
+
+          directory = dfRoot + /pictures;
+
+          default.path = dfRoot + /pictures/yosemite.jpg;
         };
 
         widget.gap = {
@@ -36,11 +40,6 @@
         widget.ram = {
           type = "sysmon";
           stat = "ram_used";
-          display = "graph";
-        };
-        widget.gpu = {
-          type = "sysmon";
-          stat = "gpu_vram";
           display = "graph";
         };
 
@@ -64,7 +63,6 @@
             "gap"
             "cpu"
             "ram"
-            "gpu"
             "gap"
             "screenshot"
             "clipboard"

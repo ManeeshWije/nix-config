@@ -21,7 +21,6 @@ _: {
       gcc
       ripgrep
       fd
-      find
       fzf
       btop
       gnupg

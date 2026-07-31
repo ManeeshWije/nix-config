@@ -8,7 +8,7 @@ _: {
       dejavu_fonts
       liberation_ttf
       corefonts
-      nerdfonts
+      nerd-fonts.iosevka-term
     ];
   };
 }
