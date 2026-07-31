@@ -12,10 +12,7 @@ _: {
     programs.niri.package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
   };
 
-  flake.homeModules.niriConfig = {
-    pkgs,
-    ...
-  }: { 
+  flake.homeModules.niriConfig = {pkgs, ...}: {
     home.packages = with pkgs; [
       xwayland-satellite
       playerctl
@@ -27,7 +24,7 @@ _: {
 
     programs.niri.settings = {
       layout = {
-        gaps = 0;
+        gaps = 2;
 
         preset-column-widths = [
           {proportion = 0.5;}
@@ -47,9 +44,28 @@ _: {
         };
 
         focus-ring = {
-          width = 2;
+          width = 2.0;
+          active.color = "#ffffff";
+          inactive.color = "#555555";
         };
       };
+
+      window-rules = [
+        {
+          geometry-corner-radius = {
+            top-left = 10.0;
+            top-right = 10.0;
+            bottom-left = 10.0;
+            bottom-right = 10.0;
+          };
+
+          clip-to-geometry = true;
+
+          border = {
+            enable = false;
+          };
+        }
+      ];
 
       input = {
         mod-key = "Super";
@@ -66,6 +82,10 @@ _: {
       spawn-at-startup = [
         {command = ["noctalia"];}
       ];
+
+      hotkey-overlay = {
+        skip-at-startup = true;
+      };
 
       binds = {
         # Keys consist of modifiers separated by + signs, followed by an XKB key name
@@ -87,7 +107,7 @@ _: {
           hotkey-overlay.title = "Open a Terminal: ghostty";
           action.spawn = "ghostty";
         };
-        "Mod+Return" = {
+        "Mod+D" = {
           hotkey-overlay.title = "Open Noctalia launcher";
           action.spawn-sh = "noctalia msg panel-toggle launcher";
         };
