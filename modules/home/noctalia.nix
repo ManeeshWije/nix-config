@@ -24,7 +24,7 @@
 
           directory = dfRoot + /pictures;
 
-          default.path = dfRoot + /pictures/yosemite.jpg;
+          default.path = dfRoot + /pictures/half-dome.jpg;
         };
 
         widget.gap = {
