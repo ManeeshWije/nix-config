@@ -9,6 +9,7 @@
       noctalia
       ghostty
       darkTheme
+      yazi
     ];
   };
 }
