@@ -22,6 +22,7 @@ _: {
       brightnessctl
       zathura
       pcmanfm
+      vesktop
     ];
 
     programs.niri.settings = {
