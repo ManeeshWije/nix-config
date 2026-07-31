@@ -3,7 +3,8 @@ _: {
     programs.ghostty = {
       enable = true;
       settings = {
-        theme = "dark:Black Metal (Gorgoroth),light:Ayu Light";
+        # theme = "dark:Black Metal (Gorgoroth),light:Ayu Light";
+        theme = "Black Metal (Gorgoroth)";
 
         font-family = "Iosevka Term Nerd Font";
 	font-feature = "-calt, -liga, -dlig";

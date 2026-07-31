@@ -19,6 +19,7 @@ _: {
     home.packages = with pkgs; [
       xwayland-satellite
       playerctl
+      brightnessctl
       zathura
       pcmanfm
     ];
@@ -312,7 +313,7 @@ _: {
 
         "Print".action.screenshot = {};
         "Mod+S".action.screenshot-screen = {};
-        "Mod+Shift+S".action.screenshot-window = {};
+        "Mod+Shift+S".action.screenshot = {};
 
         # Applications such as remote-desktop clients and software KVM switches may
         # request that niri stops processing the keyboard shortcuts defined here
