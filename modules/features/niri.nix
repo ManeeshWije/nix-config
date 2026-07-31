@@ -22,6 +22,8 @@ _: {
     ];
 
     programs.niri.settings = {
+      screenshot-path = "~/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+
       layout = {
         gaps = 2;
 
@@ -341,8 +343,8 @@ _: {
         # "Mod+Shift+Space".action.switch-layout = "prev";
 
         "Print".action.screenshot = {};
-        "Mod+S".action.screenshot-screen = {};
         "Mod+Shift+S".action.screenshot = {};
+        "Mod+S".action.screenshot-screen = {};
 
         # Applications such as remote-desktop clients and software KVM switches may
         # request that niri stops processing the keyboard shortcuts defined here

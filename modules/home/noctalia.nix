@@ -59,12 +59,11 @@
           center = ["clock"];
           end = [
             "media"
-            "tray"
             "gap"
             "cpu"
             "ram"
             "gap"
-            "screenshot"
+            "tray"
             "clipboard"
             "network"
             "battery"

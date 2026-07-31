@@ -12,6 +12,7 @@
       docker
       audio
       xdg-portal
+      syncthing
     ];
 
     # Bootloader.
