@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   flake.homeModules.endurance = {
     imports = with inputs.self.homeModules; [
       shell
@@ -8,6 +8,7 @@
       niriConfig
       noctalia
       ghostty
+      darkman
     ];
   };
 }

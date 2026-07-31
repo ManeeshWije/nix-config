@@ -17,7 +17,6 @@ _: {
       xwayland-satellite
       playerctl
       brightnessctl
-      zathura
       pcmanfm
       vesktop
     ];
@@ -107,6 +106,10 @@ _: {
           hotkey-overlay.title = "Open a Terminal: ghostty";
           action.spawn = "ghostty";
         };
+        "Mod+M" = {
+          hotkey-overlay.title = "Open File Browser: pcmanfm";
+          action.spawn = "pcmanfm";
+        };
         "Mod+D" = {
           hotkey-overlay.title = "Open Noctalia launcher";
           action.spawn-sh = "noctalia msg panel-toggle launcher";
@@ -114,6 +117,11 @@ _: {
         "Mod+I" = {
           hotkey-overlay.title = "Open a Browser: brave-origin";
           action.spawn = "brave-origin";
+        };
+
+        "Mod+Shift+D" = {
+          hotkey-overlay.title = "Open Clipboard Manager";
+          action.spawn-sh = "noctalia msg panel-toggle clipboard";
         };
 
         # Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
