@@ -19,6 +19,8 @@ _: {
     home.packages = with pkgs; [
       xwayland-satellite
       playerctl
+      zathura
+      pcmanfm
     ];
 
     programs.niri.settings = {
