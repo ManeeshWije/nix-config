@@ -8,7 +8,7 @@
       niriConfig
       noctalia
       ghostty
-      darkman
+      darkMode
     ];
   };
 }
