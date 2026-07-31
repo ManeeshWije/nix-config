@@ -26,6 +26,9 @@ _: {
       gnupg
       jq
       wl-clipboard
+      tree-sitter
+      yazi
+      starship
 
       nixd
       alejandra

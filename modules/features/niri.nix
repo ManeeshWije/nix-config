@@ -14,14 +14,8 @@ _: {
 
   flake.homeModules.niriConfig = {
     pkgs,
-    inputs,
     ...
-  }: let
-  in {
-    imports = [
-      inputs.niri.homeModules.niri
-    ];
-
+  }: { 
     home.packages = with pkgs; [
       xwayland-satellite
       playerctl

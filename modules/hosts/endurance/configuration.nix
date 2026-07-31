@@ -37,7 +37,11 @@
 		  services.xserver.xkb = {
 		    layout = "us";
 		    variant = "";
+            options = "ctrl:nocaps";
 		  };
+
+          services.power-profiles-daemon.enable = true;
+          services.upower.enable = true;
 
 		  # Define a user account. Don't forget to set a password with ‘passwd’.
 		  # users.users."maneesh" = {

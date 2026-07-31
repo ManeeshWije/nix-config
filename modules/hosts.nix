@@ -17,11 +17,20 @@
   mkNixos = name: system:
     withSystem system ({pkgs, ...}:
       inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
+        specialArgs = {inherit inputs dfRoot;};
 
         modules = [
           {nixpkgs.pkgs = pkgs;}
           nixosModules.${name}
+          inputs.home-manager.nixosModules.home-manager
+            {
+       		home-manager = {
+ 			useGlobalPkgs = true;
+ 			useUserPackages = true;
+                        extraSpecialArgs = { inherit inputs dfRoot; };
+ 			users.maneesh = homeModules.${name};
+		};
+	    }
         ];
       });
 

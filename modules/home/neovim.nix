@@ -1,11 +1,15 @@
 _: {
   flake.homeModules.neovim = {
     pkgs,
-    inputs,
+    dfRoot,
     ...
   }: {
     home.packages = [
-      inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.neovim
+      pkgs.neovim  
     ];
+    xdg.configFile."nvim" = {
+		source = dfRoot + /nvim;
+recursive = true;
+	};
   };
 }

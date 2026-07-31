@@ -4,17 +4,14 @@
     inputs,
     dfRoot,
     ...
-  }: let
-    noctalia-pkg = self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia;
-  in {
+  }: {
     imports = [
       inputs.noctalia.homeModules.default
     ];
 
     programs.noctalia = {
       enable = true;
-      package = noctalia-pkg;
-
+      
       settings = {
         theme = {
           mode = "dark";
@@ -72,6 +69,7 @@
             "screenshot"
             "clipboard"
             "network"
+            "battery"
             "bluetooth"
             "volume"
             "brightness"

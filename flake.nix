@@ -21,9 +21,18 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     noctalia-greeter = {
       url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    brave-origin-nixpkgs = {
+      url = "github:rachalaraj/nixpkgs/brave-and-brave-origin";
     };
   };
 
