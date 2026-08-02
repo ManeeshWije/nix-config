@@ -11,5 +11,7 @@
       darkTheme
       yazi
     ];
+    home.username = "maneesh";
+    home.homeDirectory = "/home/maneesh";
   };
 }

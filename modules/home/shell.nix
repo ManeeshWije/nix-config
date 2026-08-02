@@ -5,38 +5,39 @@ _: {
     inputs,
     ...
   }: {
-    home.username = "maneesh";
-    home.homeDirectory = "/home/maneesh";
     home.stateVersion = "25.11";
 
     # Have home manager manage itself
     programs.home-manager.enable = true;
 
-    home.packages = with pkgs; [
-      zsh
-      vim
-      gitFull
-      unstable.delta
-      unstable.gh
-      gcc
-      ripgrep
-      fd
-      fzf
-      btop
-      gnupg
-      jq
-      wl-clipboard
-      tree-sitter
-      yazi
-      starship
+    home.packages = with pkgs;
+      [
+        zsh
+        vim
+        gitFull
+        unstable.delta
+        unstable.gh
+        gcc
+        ripgrep
+        fd
+        fzf
+        btop
+        gnupg
+        jq
+        tree-sitter
+        yazi
+        starship
 
-      nixd
-      alejandra
-    ];
+        nixd
+        alejandra
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        wl-clipboard
+      ];
 
     programs.direnv = {
-        enable = true;
-        nix-direnv.enable = true;
+      enable = true;
+      nix-direnv.enable = true;
     };
 
     programs.zsh = {
