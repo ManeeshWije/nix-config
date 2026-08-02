@@ -5,23 +5,21 @@
     dfRoot,
     ...
   }: {
-    packages.neovim = let
-      userNvim = lib.cleanSource (dfRoot + /nvim);
-    in
-      inputs.wrapper-modules.wrappers.neovim.wrap {
-        inherit pkgs;
-        runtimePkgs = with pkgs; [
-          cargo
-          rustc
-          go
-          nodejs
-        ];
+    packages.neovim = inputs.wrapper-modules.wrappers.neovim.wrap {
+      inherit pkgs;
+      runtimePkgs = with pkgs; [
+        cargo
+        rustc
+        rustfmt
+        go
+        nodejs
+        python3
+        black
+      ];
 
-        package = pkgs.unstable.neovim-unwrapped;
+      package = pkgs.unstable.neovim-unwrapped;
 
-        settings.config_directory = "${lib.cleanSource (dfRoot + /nvim)}";
-
-        envDefault.MSS_NEOVIM_USER_DIR = "${userNvim}";
-      };
+      settings.config_directory = "${lib.cleanSource (dfRoot + /nvim)}";
+    };
   };
 }

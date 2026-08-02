@@ -24,10 +24,15 @@ _: {
         jq
         tree-sitter
         yazi
+        poppler
+        resvg
+        ffmpeg
         lazygit
         lazydocker
         starship
         imagemagick
+        zip
+        unzip
 
         nixd
         alejandra
