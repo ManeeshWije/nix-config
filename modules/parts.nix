@@ -5,7 +5,7 @@ in {
     inputs.home-manager.flakeModules.home-manager
   ];
 
-  systems = ["x86_64-linux" "aarch64-linux"];
+  systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
   _module.args = {inherit dfRoot;};
 

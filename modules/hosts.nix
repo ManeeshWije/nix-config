@@ -12,6 +12,7 @@
   # from the per-system pkgs defined in overlays.nix, via withSystem.
   hosts = {
     endurance = "x86_64-linux";
+    work-macbook = "aarch64-darwin";
   };
 
   mkNixos = name: system:
@@ -23,14 +24,14 @@
           {nixpkgs.pkgs = pkgs;}
           nixosModules.${name}
           inputs.home-manager.nixosModules.home-manager
-            {
-       		home-manager = {
- 			useGlobalPkgs = true;
- 			useUserPackages = true;
-                        extraSpecialArgs = { inherit inputs dfRoot; };
- 			users.maneesh = homeModules.${name};
-		};
-	    }
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {inherit inputs dfRoot;};
+              users.maneesh = homeModules.${name};
+            };
+          }
         ];
       });
 
