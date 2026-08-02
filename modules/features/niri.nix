@@ -19,6 +19,7 @@ _: {
       brightnessctl
       pcmanfm
       vesktop
+      localsend
     ];
 
     programs.niri.settings = {
