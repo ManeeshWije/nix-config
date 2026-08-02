@@ -1,5 +1,5 @@
 _: {
-  flake.homeModules.yazi = {
+  flake.homeModules.yaziConfig = {
     dfRoot,
     ...
   }: {

@@ -9,7 +9,7 @@
       noctalia
       ghostty
       darkTheme
-      yazi
+      yaziConfig
     ];
     home.username = "maneesh";
     home.homeDirectory = "/home/maneesh";
