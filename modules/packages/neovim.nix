@@ -10,6 +10,12 @@
     in
       inputs.wrapper-modules.wrappers.neovim.wrap {
         inherit pkgs;
+        runtimePkgs = with pkgs; [
+          cargo
+          rustc
+          go
+          nodejs
+        ];
 
         package = pkgs.unstable.neovim-unwrapped;
 

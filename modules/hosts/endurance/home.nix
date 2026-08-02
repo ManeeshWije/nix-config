@@ -13,5 +13,6 @@
     ];
     home.username = "maneesh";
     home.homeDirectory = "/home/maneesh";
+    home.stateVersion = "25.11";
   };
 }

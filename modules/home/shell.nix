@@ -5,8 +5,6 @@ _: {
     inputs,
     ...
   }: {
-    home.stateVersion = "25.11";
-
     # Have home manager manage itself
     programs.home-manager.enable = true;
 
@@ -26,7 +24,10 @@ _: {
         jq
         tree-sitter
         yazi
+        lazygit
+        lazydocker
         starship
+        imagemagick
 
         nixd
         alejandra
