@@ -2,7 +2,7 @@
   flake.homeModules.endurance = {
     imports = with inputs.self.homeModules; [
       shell
-      brave-origin
+      firefox
       neovim
       fonts
       niriConfig

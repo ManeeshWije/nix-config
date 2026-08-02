@@ -5,11 +5,11 @@ _: {
     ...
   }: {
     home.packages = [
-      pkgs.neovim  
+      pkgs.neovim
     ];
     xdg.configFile."nvim" = {
-		source = dfRoot + /nvim;
-recursive = true;
-	};
+      source = dfRoot + /nvim;
+      recursive = true;
+    };
   };
 }

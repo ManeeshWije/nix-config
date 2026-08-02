@@ -30,10 +30,6 @@
       url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
-    brave-origin-nixpkgs = {
-      url = "github:rachalaraj/nixpkgs/brave-and-brave-origin";
-    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);

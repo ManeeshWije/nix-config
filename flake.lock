@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "brave-origin-nixpkgs": {
-      "locked": {
-        "lastModified": 1784945468,
-        "narHash": "sha256-gOStrd0RCZC7VbW3NCW5o0eo7NkvrgaKDV53T9iph9I=",
-        "owner": "rachalaraj",
-        "repo": "nixpkgs",
-        "rev": "a16f93f8dad4b38f57026365aa5f79d284dcdfda",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rachalaraj",
-        "ref": "brave-and-brave-origin",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "dotfiles": {
       "flake": false,
       "locked": {
@@ -265,7 +249,6 @@
     },
     "root": {
       "inputs": {
-        "brave-origin-nixpkgs": "brave-origin-nixpkgs",
         "dotfiles": "dotfiles",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

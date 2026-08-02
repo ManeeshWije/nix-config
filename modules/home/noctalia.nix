@@ -11,7 +11,7 @@
 
     programs.noctalia = {
       enable = true;
-      
+
       settings = {
         theme = {
           mode = "dark";
@@ -55,10 +55,9 @@
           shadow = false;
           capsule = true;
 
-          start = ["workspaces"];
+          start = ["workspaces" "media"];
           center = ["clock"];
           end = [
-            "media"
             "gap"
             "cpu"
             "ram"

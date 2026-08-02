@@ -117,8 +117,8 @@ _: {
           action.spawn-sh = "noctalia msg panel-toggle launcher";
         };
         "Mod+I" = {
-          hotkey-overlay.title = "Open a Browser: brave-origin";
-          action.spawn = "brave-origin";
+          hotkey-overlay.title = "Open a Browser: firefox dev";
+          action.spawn = "firefox-devedition";
         };
 
         "Mod+Shift+D" = {
