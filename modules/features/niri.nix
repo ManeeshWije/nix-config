@@ -25,7 +25,7 @@ _: {
     ];
 
     programs.niri.settings = {
-      screenshot-path = "~/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+      screenshot-path = "~/syncthing/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
       layout = {
         gaps = 2;
