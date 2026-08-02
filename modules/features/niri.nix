@@ -20,6 +20,8 @@ _: {
       pcmanfm
       vesktop
       localsend
+      proton-authenticator
+      proton-vpn
     ];
 
     programs.niri.settings = {
