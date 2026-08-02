@@ -55,12 +55,9 @@
           shadow = false;
           capsule = true;
 
-          start = ["workspaces" "media"];
+          start = ["workspaces" "media" "cpu" "ram"];
           center = ["clock"];
           end = [
-            "gap"
-            "cpu"
-            "ram"
             "gap"
             "tray"
             "clipboard"
