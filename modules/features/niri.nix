@@ -22,13 +22,16 @@ _: {
       localsend
       proton-authenticator
       proton-vpn
+      onlyoffice-desktopeditors
+      obs-studio
+      gimp
     ];
 
     programs.niri.settings = {
       screenshot-path = "~/syncthing/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
       layout = {
-        gaps = 2;
+        gaps = 4;
 
         preset-column-widths = [
           {proportion = 0.5;}
