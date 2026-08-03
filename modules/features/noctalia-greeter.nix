@@ -14,7 +14,7 @@
         default = "Niri"
 
         [appearance]
-        scheme = "Synced"
+        scheme = "Ayu"
       '';
     in [
       # L+ = create a symlink, overwriting anything already there, on every boot

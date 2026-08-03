@@ -27,6 +27,15 @@ _: {
       gimp
     ];
 
+    home.pointerCursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+
+      gtk.enable = true;
+      x11.enable = true;
+    };
+
     programs.niri.settings = {
       outputs = {
         "eDP-1" = {
@@ -35,8 +44,8 @@ _: {
       };
 
       cursor = {
-        theme = "breeze_cursors";
-        size = 12;
+        theme = "Bibata-Modern-Ice";
+        size = 24;
       };
 
       screenshot-path = "~/syncthing/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
