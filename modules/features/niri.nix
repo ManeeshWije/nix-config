@@ -34,6 +34,11 @@ _: {
         };
       };
 
+      cursor = {
+        theme = "breeze_cursors";
+        size = 12;
+      };
+
       screenshot-path = "~/syncthing/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
       layout = {

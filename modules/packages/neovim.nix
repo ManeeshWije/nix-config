@@ -15,6 +15,7 @@
         nodejs
         python3
         black
+        marksman
       ];
 
       package = pkgs.unstable.neovim-unwrapped;
