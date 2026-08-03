@@ -28,6 +28,12 @@ _: {
     ];
 
     programs.niri.settings = {
+      outputs = {
+        "eDP-1" = {
+          scale = 1.0;
+        };
+      };
+
       screenshot-path = "~/syncthing/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
       layout = {
