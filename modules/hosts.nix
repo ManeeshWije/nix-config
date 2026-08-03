@@ -13,6 +13,8 @@
   hosts = {
     endurance = "x86_64-linux";
     work-macbook = "aarch64-darwin";
+    tars = "aarch64-linux";
+    gargantua = "aarch64-linux";
   };
 
   mkNixos = name: system:
