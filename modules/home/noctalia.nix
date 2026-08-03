@@ -19,6 +19,10 @@
           wallpaper_scheme = "m3-content";
         };
 
+        nightlight = {
+          enabled = true;
+        };
+
         wallpaper = {
           enabled = true;
 
