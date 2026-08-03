@@ -23,6 +23,26 @@
           enabled = true;
         };
 
+        idle.behavior = {
+          lock = {
+            timeout = 600;
+            action = "lock";
+            enabled = true;
+          };
+
+          screen-off = {
+            timeout = 660;
+            action = "screen_off";
+            enabled = true;
+          };
+
+          suspend = {
+            timeout = 900;
+            action = "lock_and_suspend";
+            enabled = true;
+          };
+        };
+
         wallpaper = {
           enabled = true;
 
