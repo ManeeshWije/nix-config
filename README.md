@@ -1,5 +1,7 @@
 # Nix Config
 
+This repo contains the nix configuration that run my personal devices and home server setup
+
 ### Hardware
 
 - Thinkpad T480s (client)
