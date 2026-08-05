@@ -21,7 +21,6 @@ _: {
       pcmanfm
       vesktop
       localsend
-      codex
       proton-authenticator
       proton-vpn
       onlyoffice-desktopeditors

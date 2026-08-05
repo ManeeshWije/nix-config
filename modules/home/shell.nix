@@ -32,7 +32,7 @@ _: {
       imagemagick
       zip
       unzip
-      codex
+      unstable.codex
 
       nixd
       alejandra
