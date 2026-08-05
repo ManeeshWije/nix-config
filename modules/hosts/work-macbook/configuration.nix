@@ -7,7 +7,6 @@
     imports = with inputs.self.nixosModules; [
       user
       default
-      docker
     ];
 
     nixpkgs.hostPlatform = lib.mkDefault "aarch64-darwin";
