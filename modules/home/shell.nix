@@ -32,7 +32,7 @@ _: {
       imagemagick
       zip
       unzip
-      google-cloud-sdk
+      codex
 
       nixd
       alejandra
