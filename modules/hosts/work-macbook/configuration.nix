@@ -4,9 +4,10 @@
     lib,
     ...
   }: {
-    imports = [
-      inputs.work-macbook.nixosModules.default
-      inputs.self.nixosModules.user
+    imports = with inputs.self.nixosModules; [
+      user
+      default
+      docker
     ];
 
     nixpkgs.hostPlatform = lib.mkDefault "aarch64-darwin";

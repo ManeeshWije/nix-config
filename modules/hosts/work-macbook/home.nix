@@ -5,6 +5,8 @@
       neovim
       ghostty
       yaziConfig
+      fonts
+      firefox
     ];
     home.username = "maneesh";
     home.homeDirectory = "/Users/maneesh";
