@@ -8,38 +8,34 @@ _: {
     # Have home manager manage itself
     programs.home-manager.enable = true;
 
-    home.packages = with pkgs;
-      [
-        zsh
-        vim
-        gitFull
-        unstable.delta
-        unstable.gh
-        gcc
-        ripgrep
-        fd
-        fzf
-        btop
-        gnupg
-        jq
-        tree-sitter
-        yazi
-        poppler
-        resvg
-        ffmpeg
-        lazygit
-        lazydocker
-        starship
-        imagemagick
-        zip
-        unzip
+    home.packages = with pkgs; [
+      zsh
+      vim
+      gitFull
+      unstable.delta
+      unstable.gh
+      gcc
+      ripgrep
+      fd
+      fzf
+      btop
+      gnupg
+      jq
+      tree-sitter
+      yazi
+      poppler
+      resvg
+      ffmpeg
+      lazygit
+      lazydocker
+      starship
+      imagemagick
+      zip
+      unzip
 
-        nixd
-        alejandra
-      ]
-      ++ lib.optionals pkgs.stdenv.isLinux [
-        wl-clipboard
-      ];
+      nixd
+      alejandra
+    ];
 
     programs.direnv = {
       enable = true;
@@ -49,7 +45,12 @@ _: {
     programs.zsh = {
       enable = true;
       syntaxHighlighting.enable = true;
-      initContent = builtins.readFile (dfRoot + /.zshrc);
+      initContent = ''
+        ${builtins.readFile (dfRoot + /.zshrc)}
+          if command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1; then
+            export GITHUB_PACKAGE_TOKEN="$(gh auth token)"
+          fi
+      '';
     };
   };
 }

@@ -17,6 +17,7 @@ _: {
       xwayland-satellite
       playerctl
       brightnessctl
+      wl-clipboard
       pcmanfm
       vesktop
       localsend
