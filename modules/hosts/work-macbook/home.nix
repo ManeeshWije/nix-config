@@ -4,6 +4,7 @@
       shell
       neovim
       ghostty
+      yabai
       yaziConfig
       fonts
       firefox
