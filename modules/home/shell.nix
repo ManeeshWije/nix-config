@@ -10,6 +10,8 @@ _: {
 
     home.packages = with pkgs; [
       zsh
+      tmux
+      tmux-sessionizer
       vim
       gitFull
       unstable.delta
