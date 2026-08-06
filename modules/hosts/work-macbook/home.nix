@@ -5,6 +5,7 @@
       neovim
       ghostty
       yabai
+      karabiner
       yaziConfig
       fonts
       firefox
