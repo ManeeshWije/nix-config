@@ -9,7 +9,7 @@ _: {
     ];
 
     programs.niri.enable = true;
-    programs.niri.package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+    programs.niri.package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable;
   };
 
   flake.homeModules.niriConfig = {pkgs, ...}: {
