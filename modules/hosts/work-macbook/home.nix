@@ -9,6 +9,7 @@
       yaziConfig
       fonts
       firefox
+			tableplus
     ];
     home.username = "maneesh";
     home.homeDirectory = "/Users/maneesh";
