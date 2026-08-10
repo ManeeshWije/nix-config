@@ -1,6 +1,5 @@
-{self, ...}: {
+{...}: {
   flake.homeModules.noctalia = {
-    pkgs,
     inputs,
     dfRoot,
     ...
@@ -18,6 +17,10 @@
           source = "wallpaper";
           wallpaper_scheme = "m3-content";
         };
+
+        hooks.theme_mode_changed = ''
+          dconf write /org/gnome/desktop/interface/color-scheme "'prefer-$NOCTALIA_THEME_MODE'"
+        '';
 
         nightlight = {
           enabled = true;

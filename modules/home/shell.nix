@@ -2,7 +2,6 @@ _: {
   flake.homeModules.shell = {
     pkgs,
     dfRoot,
-    inputs,
     ...
   }: {
     # Have Home Manager manage itself
@@ -40,9 +39,8 @@ _: {
       alejandra
     ];
 
-    # ~/.tmux.conf -> dfRoot/tmux/.tmux.conf
-    home.file.".tmux.conf".source =
-      dfRoot + /tmux/.tmux.conf;
+    home.file.".tmux.conf".source = dfRoot + /tmux/.tmux.conf;
+    home.file.".gitconfig".source = dfRoot + /git/.gitconfig;
 
     # ~/.config/tms/config.toml -> dfRoot/tmux/tms/config.toml
     xdg.configFile."tms/config.toml".source =
@@ -63,7 +61,7 @@ _: {
       syntaxHighlighting.enable = true;
 
       initContent = ''
-        ${builtins.readFile (dfRoot + /.zshrc)}
+        ${builtins.readFile (dfRoot + /zsh/.zshrc)}
 
         if command -v gh >/dev/null 2>&1 \
           && gh auth status >/dev/null 2>&1; then

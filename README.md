@@ -1,16 +1,14 @@
 # Nix Config
 
-This repo contains the nix configuration that run my personal devices and home server setup
-
-### Hardware
+Nix configurations for the following:
 
 - Thinkpad T480s (client)
+  - NixOS
 - M4 Macbook Air (client)
+  - Nix package manager
 - Raspberry Pi 5 (server)
+  - NixOS
   - NVME PoE hat
 - Raspberry Pi 5 (nas)
+  - NixOS
   - Penta SATA hat
-
-### Software
-
-- All devices other than the macbook run NixOS where the macbook still utilizes Nix for package management and configuration management.

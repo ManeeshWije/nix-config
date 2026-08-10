@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.sshd = { pkgs, ... }: {
+  flake.nixosModules.sshd = {pkgs, ...}: {
     services.openssh.enable = true;
   };
 }

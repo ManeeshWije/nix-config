@@ -8,19 +8,25 @@
     packages.neovim = inputs.wrapper-modules.wrappers.neovim.wrap {
       inherit pkgs;
       runtimePkgs = with pkgs; [
-        cargo
-        rustc
+        lua-language-server
+        typescript-go
+        oxlint
+        oxfmt
+        vscode-langservers-extracted
+        rust-analyzer
         rustfmt
-        go
-        nodejs
-        python3
-        black
-        marksman
+        docker-language-server
+        bash-language-server
+        nixd
+        pyright
+        stylua
+        tailwindcss-language-server
+        yaml-language-server
       ];
 
       package = pkgs.unstable.neovim-unwrapped;
 
-      settings.config_directory = "${lib.cleanSource (dfRoot + /nvim)}";
+      settings.config_directory = "${lib.cleanSource (dfRoot + /nvim-native)}";
     };
   };
 }

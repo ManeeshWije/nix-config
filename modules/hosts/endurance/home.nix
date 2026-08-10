@@ -8,8 +8,8 @@
       niriConfig
       noctalia
       ghostty
-      darkTheme
       yaziConfig
+      tableplus
     ];
     home.username = "maneesh";
     home.homeDirectory = "/home/maneesh";
