@@ -11,7 +11,7 @@
         lua-language-server
         typescript-go
         oxlint
-        oxfmt
+        unstable.oxfmt
         vscode-langservers-extracted
         rust-analyzer
         rustfmt
