@@ -9,8 +9,6 @@ _: {
 
     home.packages = with pkgs; [
       zsh
-      tmux
-      tmux-sessionizer
       vim
       gitFull
       unstable.delta
@@ -27,8 +25,6 @@ _: {
       poppler
       resvg
       ffmpeg
-      lazygit
-      lazydocker
       starship
       imagemagick
       zip
@@ -39,17 +35,7 @@ _: {
       alejandra
     ];
 
-    home.file.".tmux.conf".source = dfRoot + /tmux/.tmux.conf;
     home.file.".gitconfig".source = dfRoot + /git/.gitconfig;
-
-    # ~/.config/tms/config.toml -> dfRoot/tmux/tms/config.toml
-    xdg.configFile."tms/config.toml".source =
-      dfRoot + /tmux/tms/config.toml;
-
-    # Explicitly tell tms which config to use.
-    home.sessionVariables = {
-      TMS_CONFIG_FILE = "$HOME/.config/tms/config.toml";
-    };
 
     programs.direnv = {
       enable = true;
