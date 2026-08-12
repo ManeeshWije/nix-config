@@ -3,11 +3,11 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1786544383,
-        "narHash": "sha256-I6Ehrq03PMFwF3d27h5xJ8IC+6gMBwPtkGUajMAMV4E=",
+        "lastModified": 1786544733,
+        "narHash": "sha256-oljAAJ17MxSGYOwy37ITm+2XHn+qybBvj8fmdWhS7fE=",
         "owner": "ManeeshWije",
         "repo": "dotfiles",
-        "rev": "9cece1d67dfed2c2c601945931d4802e645153ba",
+        "rev": "d37a56b967f5489af4be208a12762de8ecb85d19",
         "type": "github"
       },
       "original": {
@@ -214,11 +214,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786543498,
-        "narHash": "sha256-VCICq63K+s9kTz7+FIZE5l4bbMXawx3AZ2IPBEeEapM=",
+        "lastModified": 1786544638,
+        "narHash": "sha256-1CCUjYuQpNko3kG2mwe6i69keNwfDgk/UcyJSrZhp+E=",
         "owner": "noctalia-dev",
         "repo": "noctalia",
-        "rev": "481694926a2cb0d9f882543dc78a0d737059e9ac",
+        "rev": "8011881ad932a6fda61e82d3642670e0a3b9a84a",
         "type": "github"
       },
       "original": {
