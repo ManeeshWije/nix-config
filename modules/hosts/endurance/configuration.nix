@@ -15,6 +15,7 @@
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/nvme0n1";
     boot.loader.grub.useOSProber = true;
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     # Use latest kernel.
     boot.kernelPackages = pkgs.linuxPackages_latest;
