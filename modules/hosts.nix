@@ -7,50 +7,122 @@
 }: let
   inherit (inputs.self) nixosModules homeModules;
 
-  # hostname -> system. Each host's modules are named after the hostname:
-  # nixosModules.<host> and homeModules.<host>. pkgs (with overlays) comes
-  # from the per-system pkgs defined in overlays.nix, via withSystem.
-  hosts = {
-    endurance = "x86_64-linux";
-    work-macbook = "aarch64-darwin";
-    tars = "aarch64-linux";
-    gargantua = "aarch64-linux";
+  # hosts = {
+  #   endurance = {
+  #     system = "x86_64-linux";
+  #     nixpkgs = inputs.nixpkgs;
+  #   };
+  #
+  #   work-macbook = {
+  #     system = "aarch64-darwin";
+  #     nixpkgs = inputs.nixpkgs;
+  #   };
+  #
+  #   tars = {
+  #     system = "aarch64-linux";
+  #     nixpkgs = inputs.nixpkgs-unstable;
+  #   };
+  #
+  #   gargantua = {
+  #     system = "aarch64-linux";
+  #     nixpkgs = inputs.nixpkgs-unstable;
+  #   };
+  # };
+
+hosts = {
+  endurance = {
+    system = "x86_64-linux";
+    nixpkgs = inputs.nixpkgs;
+    homeManager = inputs.home-manager;
   };
 
-  mkNixos = name: system:
-    withSystem system ({pkgs, ...}:
-      inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs dfRoot;};
+  work-macbook = {
+    system = "aarch64-darwin";
+    nixpkgs = inputs.nixpkgs;
+    homeManager = inputs.home-manager;
+  };
 
-        modules = [
-          {nixpkgs.pkgs = pkgs;}
-          nixosModules.${name}
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {inherit inputs dfRoot;};
-              users.maneesh = homeModules.${name};
+  tars = {
+    system = "aarch64-linux";
+    nixpkgs = inputs.nixpkgs-unstable;
+    homeManager = inputs.home-manager-unstable;
+  };
+
+  gargantua = {
+    system = "aarch64-linux";
+    nixpkgs = inputs.nixpkgs;
+    homeManager = inputs.home-manager;
+  };
+};
+
+  mkPkgs = nixpkgs: system:
+    import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+
+      overlays = [
+        (final: _prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            inherit (final.stdenv.hostPlatform) system;
+            config.allowUnfree = true;
+          };
+        })
+      ];
+    };
+
+  mkNixos = name: host: let
+    pkgs = mkPkgs host.nixpkgs host.system;
+  in
+    host.nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs dfRoot;
+      };
+
+      modules = [
+        {nixpkgs.pkgs = pkgs;}
+
+        nixosModules.${name}
+
+        host.homeManager.nixosModules.home-manager
+
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+
+            extraSpecialArgs = {
+              inherit inputs dfRoot;
             };
-          }
-        ];
-      });
 
-  mkHome = name: system:
-    withSystem system ({pkgs, ...}:
-      inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+            users.maneesh = homeModules.${name};
+          };
+        }
+      ];
+    };
 
-        extraSpecialArgs = {inherit inputs dfRoot;};
+  mkHome = name: host: let
+    pkgs = mkPkgs host.nixpkgs host.system;
+  in
+    host.homeManager.lib.homeManagerConfiguration {
+      inherit pkgs;
 
-        modules = [homeModules.${name}];
-      });
+      extraSpecialArgs = {
+        inherit inputs dfRoot;
+      };
+
+      modules = [
+        homeModules.${name}
+      ];
+    };
 in {
-  flake.nixosConfigurations = lib.mapAttrs mkNixos hosts;
+  flake.nixosConfigurations =
+    lib.mapAttrs mkNixos hosts;
 
   flake.homeConfigurations =
     lib.mapAttrs'
-    (name: system: lib.nameValuePair "maneesh@${name}" (mkHome name system))
+    (name: host:
+      lib.nameValuePair
+        "maneesh@${name}"
+        (mkHome name host))
     hosts;
 }
