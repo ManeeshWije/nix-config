@@ -1,0 +1,10 @@
+keys:
+  - &endurance age16nzr436h3pf8akpwtgm3ur5sgh962qe95shne0lhn08serll9ykqvf35a9
+  - &tars age1n7ju4hc479r38rn5xcthn44efkjvxc988q7y78dkd9ee8pah2ptq26dqn3
+
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *endurance
+          - *tars

@@ -4,6 +4,7 @@
       user
       sshd
       docker
+      pihole
     ];
 
     # Bootloader.
