@@ -1,59 +1,36 @@
 {
   inputs,
   lib,
-  withSystem,
   dfRoot,
   ...
 }: let
   inherit (inputs.self) nixosModules homeModules;
 
-  # hosts = {
-  #   endurance = {
-  #     system = "x86_64-linux";
-  #     nixpkgs = inputs.nixpkgs;
-  #   };
-  #
-  #   work-macbook = {
-  #     system = "aarch64-darwin";
-  #     nixpkgs = inputs.nixpkgs;
-  #   };
-  #
-  #   tars = {
-  #     system = "aarch64-linux";
-  #     nixpkgs = inputs.nixpkgs-unstable;
-  #   };
-  #
-  #   gargantua = {
-  #     system = "aarch64-linux";
-  #     nixpkgs = inputs.nixpkgs-unstable;
-  #   };
-  # };
+  hosts = {
+    endurance = {
+      system = "x86_64-linux";
+      nixpkgs = inputs.nixpkgs;
+      homeManager = inputs.home-manager;
+    };
 
-hosts = {
-  endurance = {
-    system = "x86_64-linux";
-    nixpkgs = inputs.nixpkgs;
-    homeManager = inputs.home-manager;
-  };
+    work-macbook = {
+      system = "aarch64-darwin";
+      nixpkgs = inputs.nixpkgs;
+      homeManager = inputs.home-manager;
+    };
 
-  work-macbook = {
-    system = "aarch64-darwin";
-    nixpkgs = inputs.nixpkgs;
-    homeManager = inputs.home-manager;
-  };
+    tars = {
+      system = "aarch64-linux";
+      nixpkgs = inputs.nixpkgs-unstable;
+      homeManager = inputs.home-manager-unstable;
+    };
 
-  tars = {
-    system = "aarch64-linux";
-    nixpkgs = inputs.nixpkgs-unstable;
-    homeManager = inputs.home-manager-unstable;
+    gargantua = {
+      system = "aarch64-linux";
+      nixpkgs = inputs.nixpkgs-unstable;
+      homeManager = inputs.home-manager-unstable;
+    };
   };
-
-  gargantua = {
-    system = "aarch64-linux";
-    nixpkgs = inputs.nixpkgs;
-    homeManager = inputs.home-manager;
-  };
-};
 
   mkPkgs = nixpkgs: system:
     import nixpkgs {
@@ -122,7 +99,7 @@ in {
     lib.mapAttrs'
     (name: host:
       lib.nameValuePair
-        "maneesh@${name}"
-        (mkHome name host))
+      "maneesh@${name}"
+      (mkHome name host))
     hosts;
 }

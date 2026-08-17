@@ -27,7 +27,6 @@ _: {
       ffmpeg
       starship
       imagemagick
-      nvme-cli
       zip
       unzip
       unstable.codex

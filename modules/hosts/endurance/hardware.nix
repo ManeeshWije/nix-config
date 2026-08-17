@@ -2,7 +2,6 @@
   flake.nixosModules.endurance = {
     config,
     lib,
-    pkgs,
     modulesPath,
     ...
   }: {
