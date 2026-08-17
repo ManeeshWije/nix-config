@@ -17,6 +17,12 @@
           enabled = true;
           description = "HaGeZi Pro";
         }
+        {
+          url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
+          type = "block";
+          enabled = true;
+          description = "Steven Black's HOSTS";
+        }
       ];
     };
 
