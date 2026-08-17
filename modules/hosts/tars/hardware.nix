@@ -13,6 +13,9 @@
       "usbhid"
     ];
 
+    boot.loader.grub.enable = false;
+    boot.loader.generic-extlinux-compatible.enable = true;
+
     boot.initrd.kernelModules = [];
     boot.kernelModules = [];
     boot.extraModulePackages = [];
