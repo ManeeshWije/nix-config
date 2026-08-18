@@ -6,6 +6,7 @@
       docker
       pihole
       traefik
+      sops
     ];
 
     # Bootloader.
