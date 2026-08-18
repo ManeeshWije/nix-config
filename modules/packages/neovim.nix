@@ -12,6 +12,7 @@
         typescript-go
         oxlint
         unstable.oxfmt
+        unstable.prettier
         vscode-langservers-extracted
         rust-analyzer
         rustfmt
