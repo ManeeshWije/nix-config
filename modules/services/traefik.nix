@@ -15,6 +15,8 @@
     systemd.services.traefik.environment = {
       CF_DNS_API_TOKEN_FILE =
         config.sops.secrets.cf-dns-api-token.path;
+      TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL_FILE =
+        config.sops.secrets.cf-email.path;
     };
 
     services.traefik = {
@@ -35,7 +37,6 @@
         };
 
         certificatesResolvers.cloudflare.acme = {
-          email = "${config.sops.secrets.cf-email}";
           storage = "/var/lib/traefik/acme.json";
 
           dnsChallenge = {
