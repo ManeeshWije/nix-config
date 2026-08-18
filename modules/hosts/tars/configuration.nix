@@ -5,6 +5,7 @@
       sshd
       docker
       pihole
+      traefik
     ];
 
     # Bootloader.

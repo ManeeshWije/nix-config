@@ -4,9 +4,15 @@
       enable = true;
 
       settings = {
-        dns.upstreams = [
-          "9.9.9.9"
-          "1.1.1.1"
+        dns = {
+          upstreams = [
+            "9.9.9.9"
+            "1.1.1.1"
+          ];
+        };
+
+        misc.dnsmasq_lines = [
+          "address=/wijeproject.com/10.0.0.28"
         ];
       };
 
@@ -28,11 +34,31 @@
 
     services.pihole-web = {
       enable = true;
-      ports = ["443s"];
+
+      hostName = "pihole.wijeproject.com";
+
+      # Only Traefik needs to talk to this.
+      ports = [
+        "127.0.0.1:8081"
+      ];
+    };
+
+    services.traefik.dynamicConfigOptions.http = {
+      routers.pihole = {
+        rule = "Host(`pihole.wijeproject.com`)";
+        entryPoints = ["web"];
+        service = "pihole";
+      };
+
+      services.pihole.loadBalancer.servers = [
+        {
+          url = "http://127.0.0.1:8081";
+        }
+      ];
     };
 
     networking.firewall = {
-      allowedTCPPorts = [53 443];
+      allowedTCPPorts = [53];
       allowedUDPPorts = [53];
     };
   };
