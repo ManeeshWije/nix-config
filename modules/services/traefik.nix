@@ -1,13 +1,13 @@
 {...}: {
   flake.nixosModules.traefik = {config, ...}: {
     sops.secrets.cf-dns-api-token = {
-      sopsFile = ../../secrets/traefik.yaml;
+      sopsFile = ../secrets/traefik.yaml;
       key = "cf_dns_api_token";
       owner = "traefik";
     };
 
     sops.secrets.cf-email = {
-      sopsFile = ../../secrets/traefik.yaml;
+      sopsFile = ../secrets/traefik.yaml;
       key = "cf_email";
       owner = "traefik";
     };
