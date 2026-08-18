@@ -46,7 +46,12 @@
     services.traefik.dynamicConfigOptions.http = {
       routers.pihole = {
         rule = "Host(`pihole.wijeproject.com`)";
-        entryPoints = ["web"];
+        entryPoints = ["websecure"];
+
+        tls = {
+          certResolver = "cloudflare";
+        };
+
         service = "pihole";
       };
 
