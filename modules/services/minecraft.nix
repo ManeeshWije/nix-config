@@ -70,7 +70,7 @@
 
           enable-rcon = false;
           enable-query = false;
-          level-seed = "16515906812";
+          # level-seed = "16515906812";
 
           motd = "Fabric 26.2";
         };
