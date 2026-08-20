@@ -43,6 +43,8 @@
       eula = true;
       openFirewall = true;
 
+      dataDir = "/var/lib/minecraft";
+
       servers.main = {
         enable = true;
         autoStart = true;

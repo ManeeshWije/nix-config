@@ -10,6 +10,7 @@
       ghostty
       yaziConfig
       tableplus
+      lunar-client
     ];
     home.username = "maneesh";
     home.homeDirectory = "/home/maneesh";
