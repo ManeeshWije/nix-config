@@ -7,6 +7,7 @@
       pihole
       traefik
       sops
+      minecraft
     ];
 
     # Bootloader.

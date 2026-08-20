@@ -9,6 +9,7 @@
 
       # nixpkgs-unstable, accessible as pkgs.unstable
       overlays = [
+        inputs.nix-minecraft.overlay
         (final: _prev: {
           unstable = import inputs.nixpkgs-unstable {
             inherit (final.stdenv.hostPlatform) system;
