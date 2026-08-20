@@ -1,29 +1,87 @@
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.gargantua = {
     lib,
     modulesPath,
     ...
   }: {
     imports = [
+      # Build this NixOS configuration as a flashable AArch64 SD image.
+      (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
+
+      # Raspberry Pi 5 kernel + boot/device-tree configuration.
+      inputs.nixos-hardware.nixosModules.raspberry-pi-5
+
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+    # The Pi kernel does not provide tpm-crb, and we already hit this
+    # failure when building the Pi kernel previously.
+    boot.initrd.systemd.tpm2.enable = false;
+
+    # Penta SATA HAT uses a JMicron JMB585 AHCI controller.
+    # The Pi 5 profile already adds nvme, pcie-brcmstb, RP1, etc.
     boot.initrd.availableKernelModules = [
-      "nvme"
-      "usbhid"
+      "ahci"
     ];
 
-    boot.loader.grub.enable = false;
-    boot.loader.generic-extlinux-compatible.enable = true;
+    #
+    # ZFS
+    #
+    # Gargantua's SATA array will use ZFS.
+    boot.supportedFilesystems = [
+      "zfs"
+    ];
 
-    boot.initrd.kernelModules = [];
-    boot.kernelModules = [];
-    boot.extraModulePackages = [];
+    # Must stay stable once you have created/imported ZFS pools.
+    networking.hostId = "92bd87e4";
 
-    fileSystems."/" = {
-      device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-      fsType = "ext4";
+    #
+    # SD image
+    #
+    # The stock NixOS image uses a 30 MiB firmware partition.
+    # We're intentionally making ours much larger so the Pi firmware,
+    # DTBs and overlays actually fit.
+    sdImage = {
+      firmwareSize = 512;
+      expandOnBoot = true;
     };
+
+    image.baseName = "gargantua-rpi5";
+
+    #
+    # Raspberry Pi boot firmware
+    #
+    # The SD-image builder will populate the FAT partition from this
+    # configuration instead of using the generic stock population.
+    hardware.raspberry-pi.firmware = {
+      enable = true;
+      uboot.enable = true;
+    };
+
+    #
+    # Radxa Penta SATA HAT
+    #
+    hardware.raspberry-pi.configtxt.settings.pi5.dtparam = [
+      "pciex1"
+      "pciex1_gen=3"
+    ];
+
+    hardware.raspberry-pi.configtxt.deviceTreeOverlays.pi5 = [
+      {
+        "pcie-32bit-dma-pi5" = {};
+      }
+    ];
+
+    #
+    # sd-image.nix defaults this partition to noauto.
+    # We want it mounted after installation so future rebuilds can
+    # update Pi firmware/config.txt declaratively.
+    #
+    fileSystems."/boot/firmware".options = lib.mkForce [
+      "nofail"
+      "fmask=0022"
+      "dmask=0022"
+    ];
 
     swapDevices = [];
 
