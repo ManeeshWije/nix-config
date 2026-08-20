@@ -12,7 +12,13 @@
         };
 
         misc.dnsmasq_lines = [
-          "address=/home.wijeproject.com/192.168.88.251"
+          # Everything under *.wijeproject.com goes to local Traefik by default.
+          # The "*." means this does NOT hijack wijeproject.com itself.
+          "address=/*.wijeproject.com/192.168.88.251"
+
+          # Exceptions: resolve these normally through upstream DNS.
+          "server=/watch.wijeproject.com/#"
+          "server=/www.wijeproject.com/#"
         ];
       };
 
@@ -45,12 +51,14 @@
 
     services.traefik.dynamicConfigOptions.http = {
       routers.pihole = {
-        rule = "Host(`pihole.home.wijeproject.com`)";
-        entryPoints = ["websecure"];
+        rule = "Host(`pihole.wijeproject.com`)";
 
-        tls = {
-          certResolver = "cloudflare";
-        };
+        entryPoints = [
+          "websecure"
+          "websecure-ext"
+        ];
+
+        tls.certResolver = "cloudflare";
 
         service = "pihole";
       };

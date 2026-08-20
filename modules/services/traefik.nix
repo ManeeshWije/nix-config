@@ -24,6 +24,7 @@
 
       staticConfigOptions = {
         entryPoints = {
+          # LAN HTTP
           web = {
             address = ":80";
 
@@ -33,7 +34,22 @@
             };
           };
 
+          # LAN HTTPS
           websecure.address = ":443";
+
+          # WAN HTTP after router NAT 80 -> 9080
+          web-ext = {
+            address = ":9080";
+
+            # Deliberately redirect to public/default HTTPS :443.
+            http.redirections.entryPoint = {
+              to = "websecure";
+              scheme = "https";
+            };
+          };
+
+          # WAN HTTPS after router NAT 443 -> 9443
+          websecure-ext.address = ":9443";
         };
 
         certificatesResolvers.cloudflare.acme = {
@@ -50,6 +66,6 @@
       };
     };
 
-    networking.firewall.allowedTCPPorts = [80 443];
+    networking.firewall.allowedTCPPorts = [80 443 9080 9443];
   };
 }
