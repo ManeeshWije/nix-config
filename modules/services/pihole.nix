@@ -12,7 +12,7 @@
         };
 
         misc.dnsmasq_lines = [
-          "address=/wijeproject.com/10.0.0.28"
+          "address=/wijeproject.com/192.168.88.251"
         ];
       };
 
