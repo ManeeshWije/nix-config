@@ -1,6 +1,5 @@
-{pkgs, ...}: {
+{...}: {
   flake.nixosModules.gargantua = {
-    pkgs,
     lib,
     modulesPath,
     ...
@@ -16,20 +15,6 @@
 
     boot.loader.grub.enable = false;
     boot.loader.generic-extlinux-compatible.enable = true;
-
-    hardware.deviceTree = {
-      enable = true;
-
-      # Only keep the Pi 5 DTB.
-      filter = "bcm2712-rpi-5-b.dtb";
-
-      overlays = [
-        {
-          name = "pcie-32bit-dma-pi5";
-          dtboFile = "${pkgs.raspberrypifw}/share/raspberrypi/boot/overlays/pcie-32bit-dma-pi5.dtbo";
-        }
-      ];
-    };
 
     boot.initrd.kernelModules = [];
     boot.kernelModules = [];
