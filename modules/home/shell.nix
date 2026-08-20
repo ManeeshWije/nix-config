@@ -16,6 +16,7 @@ _: {
       gcc
       ripgrep
       fd
+      rclone
       fzf
       btop
       gnupg
