@@ -60,7 +60,7 @@
 
           gamemode = "survival";
           difficulty = "normal";
-          max-players = 10;
+          max-players = 2;
 
           online-mode = true;
           white-list = true;
@@ -70,6 +70,7 @@
 
           enable-rcon = false;
           enable-query = false;
+          level-seed = "16515906812";
 
           motd = "Fabric 26.2";
         };
@@ -78,6 +79,21 @@
           tty_ = "935d3f32-916a-4aee-80e9-89a6f659b194";
           abbybabyyy = "1ac68aa7-6631-4bfc-b802-25e7254f79d2";
           angelbbyabby = "6cb136a5-818a-43d2-a96b-0632d4ee66e0";
+        };
+
+        operators = {
+          tty_ = {
+            uuid = "935d3f32-916a-4aee-80e9-89a6f659b194";
+            level = 3;
+          };
+          abbybabyyy = {
+            uuid = "1ac68aa7-6631-4bfc-b802-25e7254f79d2";
+            level = 3;
+          };
+          angelbbyabby = {
+            uuid = "6cb136a5-818a-43d2-a96b-0632d4ee66e0";
+            level = 3;
+          };
         };
 
         symlinks.mods =
