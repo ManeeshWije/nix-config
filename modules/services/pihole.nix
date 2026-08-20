@@ -55,7 +55,6 @@
 
         entryPoints = [
           "websecure"
-          "websecure-ext"
         ];
 
         tls.certResolver = "cloudflare";
