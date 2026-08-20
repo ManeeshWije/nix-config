@@ -12,7 +12,7 @@
         };
 
         misc.dnsmasq_lines = [
-          "address=/*.wijeproject.com/192.168.88.251"
+          "address=/home.wijeproject.com/192.168.88.251"
         ];
       };
 
@@ -45,7 +45,7 @@
 
     services.traefik.dynamicConfigOptions.http = {
       routers.pihole = {
-        rule = "Host(`pihole.wijeproject.com`)";
+        rule = "Host(`pihole.home.wijeproject.com`)";
         entryPoints = ["websecure"];
 
         tls = {
