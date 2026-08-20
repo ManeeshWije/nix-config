@@ -65,8 +65,8 @@
           online-mode = true;
           white-list = true;
 
-          view-distance = 14;
-          simulation-distance = 12;
+          view-distance = 16;
+          simulation-distance = 16;
 
           enable-rcon = false;
           enable-query = false;
