@@ -14,6 +14,11 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+    # sd-image.nix enables every ARM hardware driver by default.
+    # This image only targets Raspberry Pi 5, and linux-rpi does not
+    # provide several of those generic drivers (e.g. dw-hdmi).
+    hardware.enableAllHardware = lib.mkForce false;
+
     # The Pi kernel does not provide tpm-crb, and we already hit this
     # failure when building the Pi kernel previously.
     boot.initrd.systemd.tpm2.enable = false;
