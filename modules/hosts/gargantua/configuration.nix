@@ -4,6 +4,8 @@
       user
       sshd
       docker
+      sops
+      # TODO IMPORT BACKUP WHEN READY
     ];
 
     # Bootloader.

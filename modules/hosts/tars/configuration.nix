@@ -8,6 +8,7 @@
       traefik
       sops
       minecraft
+      backup-tars
     ];
 
     # Bootloader.
