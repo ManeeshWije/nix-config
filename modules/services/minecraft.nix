@@ -59,7 +59,7 @@
           server-port = 25565;
 
           gamemode = "survival";
-          difficulty = "normal";
+          difficulty = "peaceful";
           max-players = 2;
 
           online-mode = true;
@@ -70,7 +70,7 @@
 
           enable-rcon = false;
           enable-query = false;
-          # level-seed = "16515906812";
+          level-seed = "-8612793767594611505";
 
           motd = "Fabric 26.2";
         };
