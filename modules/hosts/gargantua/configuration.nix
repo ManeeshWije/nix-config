@@ -5,7 +5,8 @@
       sshd
       docker
       sops
-      # TODO IMPORT BACKUP WHEN READY
+      backup
+      backup-gargantua
     ];
 
     # Bootloader.

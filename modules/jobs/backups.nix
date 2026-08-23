@@ -102,8 +102,7 @@ in {
   flake.nixosModules.backup-gargantua = mkBackup {
     name = "backup-gargantua";
 
-    # TODO CHANGE ME AFTER MIGRATION OF DATA
-    source = "/storage";
+    source = "/gargantua";
 
     bucket = "wijeproject-backups";
     prefix = "gargantua/storage";
