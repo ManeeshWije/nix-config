@@ -12,12 +12,18 @@
       owner = "traefik";
     };
 
-    systemd.services.traefik.environment = {
-      CF_DNS_API_TOKEN_FILE =
-        config.sops.secrets.cf-dns-api-token.path;
-      TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL_FILE =
-        config.sops.secrets.cf-email.path;
+    sops.templates."traefik.env" = {
+      owner = "traefik";
+      mode = "0400";
+
+      content = ''
+        CF_DNS_API_TOKEN=${config.sops.placeholder.cf-dns-api-token}
+        TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL=${config.sops.placeholder.cf-email}
+      '';
     };
+
+    systemd.services.traefik.serviceConfig.EnvironmentFile =
+      config.sops.templates."traefik.env".path;
 
     services.traefik = {
       enable = true;
