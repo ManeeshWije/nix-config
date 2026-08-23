@@ -5,7 +5,6 @@
       sshd
       docker
       sops
-      backup
       backup-gargantua
     ];
 
