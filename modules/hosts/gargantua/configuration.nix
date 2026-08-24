@@ -26,6 +26,23 @@
     # Enable networking
     networking.networkmanager.enable = true;
 
+    #
+    # ZFS
+    #
+    boot.zfs.extraPools = [
+      "gargantua"
+    ];
+
+    services.zfs.autoScrub = {
+      enable = true;
+      pools = [
+        "gargantua"
+      ];
+      interval = "monthly";
+    };
+
+    services.zfs.trim.enable = true;
+
     # Set your time zone.
     time.timeZone = "America/Toronto";
 

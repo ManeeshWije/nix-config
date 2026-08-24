@@ -101,9 +101,7 @@ in {
 
   flake.nixosModules.backup-gargantua = mkBackup {
     name = "backup-gargantua";
-
-    # source = "/gargantua";
-    source = "/gargantua/.zfs/snapshot/pre-stripe-migration";
+    source = "/storage";
 
     bucket = "wijeproject-backups";
     prefix = "gargantua/storage";
