@@ -6,6 +6,7 @@
       docker
       sops
       backup-gargantua
+      nfs
     ];
 
     # Bootloader.
