@@ -9,7 +9,7 @@
       sops
       minecraft
       backup-tars
-      jellfin
+      jellyfin
     ];
 
     # Bootloader.
