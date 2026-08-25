@@ -1,16 +1,14 @@
 {...}: {
   flake.nixosModules.jellyfin = {...}: {
     #
-    # NFS client
+    # NFS client support
     #
-    # NixOS requires NFS support to be explicitly enabled for
-    # declarative NFS mounts.
     boot.supportedFilesystems = [
       "nfs"
     ];
 
     #
-    # Gargantua media storage
+    # Gargantua storage
     #
     fileSystems."/storage" = {
       device = "192.168.88.245:/storage";
@@ -18,16 +16,15 @@
 
       options = [
         "nfsvers=4.2"
-
-        # Jellyfin only needs to read media.
         "ro"
-
-        # This is a network filesystem.
         "_netdev"
 
-        # Don't block Tars boot if Gargantua is unavailable.
+        # Don't make the entire Tars boot depend on Gargantua.
         "noauto"
         "x-systemd.automount"
+
+        # Don't sit forever if Gargantua is unavailable.
+        "x-systemd.mount-timeout=10s"
       ];
     };
 
@@ -37,17 +34,47 @@
     services.jellyfin = {
       enable = true;
 
-      # Traefik on Tars will expose Jellyfin.
-      # No reason to expose Jellyfin's native ports directly.
+      # Do NOT expose :8096 through the NixOS firewall.
+      # Traefik is our public entrypoint.
       openFirewall = false;
     };
 
-    #
-    # Don't let Jellyfin start against an empty /storage directory.
-    # Accessing this path also activates the systemd NFS automount.
-    #
+    # Ensure Jellyfin doesn't start and scan an empty /storage
+    # when Gargantua's NFS filesystem isn't mounted.
     systemd.services.jellyfin.unitConfig.RequiresMountsFor = [
       "/storage"
     ];
+
+    #
+    # Traefik
+    #
+    services.traefik.dynamicConfigOptions.http = {
+      routers.jellyfin = {
+        rule = "Host(`jellyfin.wijeproject.com`)";
+
+        entryPoints = [
+          "websecure"
+          "websecure-ext"
+        ];
+
+        service = "jellyfin";
+
+        tls = {
+          certResolver = "cloudflare";
+        };
+      };
+
+      services.jellyfin.loadBalancer.servers = [
+        {
+          url = "http://127.0.0.1:8096";
+        }
+      ];
+
+      middlewares.jellyfin-headers.headers = {
+        customResponseHeaders = {
+          X-Robots-Tag = "noindex,nofollow,nosnippet,noarchive,noimageindex";
+        };
+      };
+    };
   };
 }
