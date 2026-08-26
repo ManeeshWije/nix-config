@@ -2,6 +2,7 @@
   inputs,
   lib,
   dfRoot,
+  hostOverlays,
   ...
 }: let
   inherit (inputs.self) nixosModules homeModules;
@@ -37,15 +38,7 @@
       inherit system;
       config.allowUnfree = true;
 
-      overlays = [
-        inputs.nix-minecraft.overlay
-        (final: _prev: {
-          unstable = import inputs.nixpkgs-unstable {
-            inherit (final.stdenv.hostPlatform) system;
-            config.allowUnfree = true;
-          };
-        })
-      ];
+      overlays = hostOverlays;
     };
 
   mkNixos = name: host: let
