@@ -6,6 +6,7 @@
     prefix,
     region,
     schedule,
+    excludes ? [],
   }: {
     config,
     lib,
@@ -60,6 +61,10 @@
         ${pkgs.rclone}/bin/rclone copy \
           ${lib.escapeShellArg source} \
           ${lib.escapeShellArg "aws:${bucket}/${prefix}"} \
+          ${lib.concatMapStringsSep " " (
+            pattern: "--exclude=${lib.escapeShellArg pattern}"
+          )
+          excludes} \
           --fast-list \
           --transfers 4 \
           --checkers 8 \
@@ -106,6 +111,10 @@ in {
     bucket = "wijeproject-backups";
     prefix = "gargantua/storage";
     region = "us-east-2";
+
+    excludes = [
+      "/nix-build/**"
+    ];
 
     schedule = "*-*-* 04:00:00";
   };
