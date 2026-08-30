@@ -37,6 +37,11 @@
         url = "https://cdn.modrinth.com/data/RPqFuDWl/versions/BtD5YEpa/mobignoreme-1.2.jar";
         sha512 = "46bd394ed8b6d8a98438a5b2d090c1d32a269e20ab679bdbb48c0e6976519a287d679de46ee739589b9a29d8936d260b4bed8d2362eac1aee9e36a799408029a";
       };
+
+      fabric-permissions-api = fetchurl {
+        url = "https://cdn.modrinth.com/data/lzVo0Dll/versions/b1EqjxFs/fabric-permissions-api-0.7.0.jar";
+        sha512 = "fd1961a4496cdc6cf22fbac0627a331407e97d3131f222641c1e370824adb3179e530e33e9e03adff1843e5556750edbb7abe0be7a241c7f0e3ca3ddc8b78ab7";
+      };
     };
   in {
     imports = [
