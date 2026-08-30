@@ -32,6 +32,11 @@
         url = "https://cdn.modrinth.com/data/codAaoxh/versions/3uBvRFE9/midnightlib-fabric-1.9.3%2B26.2.jar";
         sha512 = "46a0959737bb54431f0ae0a7dfa2467f26211d27ea2cd1ef7a7750c9a97425f481db46bab6cc861cd3b77accb7dfef3653dc5c683d7dfc07fa7f76824351ce22";
       };
+
+      mob-ignore-me = fetchurl {
+        url = "https://cdn.modrinth.com/data/RPqFuDWl/versions/BtD5YEpa/mobignoreme-1.2.jar";
+        sha512 = "46bd394ed8b6d8a98438a5b2d090c1d32a269e20ab679bdbb48c0e6976519a287d679de46ee739589b9a29d8936d260b4bed8d2362eac1aee9e36a799408029a";
+      };
     };
   in {
     imports = [
@@ -59,7 +64,7 @@
           server-port = 25565;
 
           gamemode = "survival";
-          difficulty = "peaceful";
+          difficulty = "normal";
           max-players = 2;
 
           online-mode = true;
