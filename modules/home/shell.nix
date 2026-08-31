@@ -21,6 +21,7 @@ _: {
       btop
       gnupg
       jq
+      mpv
       tree-sitter
       yazi
       poppler
