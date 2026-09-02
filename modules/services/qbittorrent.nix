@@ -22,22 +22,6 @@
       nameserver 2a07:b944::2:1
     '';
 
-    # Only used on first qBittorrent start.
-    #
-    # After that qBittorrent owns its config, so WebUI passwords and other
-    # changes are persistent.
-    qbitBootstrapConfig = pkgs.writeText "qbittorrent-bootstrap.conf" ''
-      [LegalNotice]
-      Accepted=true
-
-      [Network]
-      PortForwardingEnabled=false
-
-      [WebUI]
-      Address=*
-      LocalHostAuth=false
-    '';
-
     protonPortForward = pkgs.writeShellApplication {
       name = "proton-qbittorrent-port-forward";
 
@@ -295,11 +279,27 @@
       # Do NOT open 8080 or the torrent port directly on tars.
       openFirewall = false;
 
-      # Avoid putting a declarative qBittorrent.conf in the Nix store.
-      #
-      # qBittorrent's config remains mutable, so WebUI passwords and the
-      # Proton-assigned listen port survive normally.
-      serverConfig = {};
+      serverConfig = {
+        LegalNotice.Accepted = true;
+
+        Network.PortForwardingEnabled = false;
+
+        Preferences = {
+          # Explicitly preserve the modern qBittorrent behaviour.
+          BitTorrent.Session.QueueingSystemEnabled = false;
+
+          WebUI = {
+            Address = "*";
+
+            # Our port-forward service calls the API through
+            # 127.0.0.1 inside this same namespace.
+            LocalHostAuth = false;
+
+            # qBittorrent must not perform its own UPnP forwarding.
+            UseUPnP = false;
+          };
+        };
+      };
 
       extraArgs = [
         "--confirm-legal-notice"
@@ -309,17 +309,6 @@
     systemd.services.qbittorrent = {
       bindsTo = ["qbittorrent-netns.service"];
       after = ["qbittorrent-netns.service"];
-
-      preStart = ''
-        config_file="/var/lib/qBittorrent/qBittorrent/config/qBittorrent.conf"
-
-        if [ ! -e "$config_file" ]; then
-          ${pkgs.coreutils}/bin/install \
-            -Dm600 \
-            ${qbitBootstrapConfig} \
-            "$config_file"
-        fi
-      '';
 
       serviceConfig = {
         NetworkNamespacePath = namespacePath;
