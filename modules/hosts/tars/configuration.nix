@@ -11,6 +11,7 @@
       backup-tars
       jellyfin
       qbittorrent
+      sonarr
     ];
 
     # Bootloader.
