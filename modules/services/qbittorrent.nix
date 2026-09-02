@@ -292,6 +292,9 @@
         Preferences.WebUI = {
           Address = "*";
 
+          Username = "maneesh";
+          Password_PBKDF2 = "@ByteArray(oTM9gjuzZq0LvPPyL3mFng==:61MGOQrXrbtWoVImOb7in/1m/rA+F/ORUFqbleHSUcujc8YrRDI1ssStg+wUHLbI34QxkWlPNiABSgkAKujS+Q==)";
+
           LocalHostAuth = false;
           UseUPnP = false;
 
