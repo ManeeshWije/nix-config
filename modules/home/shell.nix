@@ -29,6 +29,7 @@ _: {
       ffmpeg
       starship
       imagemagick
+      sops
       zip
       unzip
       unstable.codex

@@ -54,6 +54,10 @@
       openFirewall = true;
     };
 
+    services.gvfs.enable = true;
+    services.udisks2.enable = true;
+    security.polkit.enable = true;
+
     # Define a user account. Don't forget to set a password with ‘passwd’.
     # users.users."maneesh" = {
     #   isNormalUser = true;

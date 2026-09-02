@@ -10,6 +10,7 @@
       minecraft
       backup-tars
       jellyfin
+      qbittorrent
     ];
 
     # Bootloader.
