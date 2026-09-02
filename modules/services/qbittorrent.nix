@@ -291,12 +291,14 @@
           WebUI = {
             Address = "*";
 
-            # Our port-forward service calls the API through
-            # 127.0.0.1 inside this same namespace.
+            # Port-forward updater talks through 127.0.0.1.
             LocalHostAuth = false;
 
-            # qBittorrent must not perform its own UPnP forwarding.
             UseUPnP = false;
+
+            # Traefik connects from the host side of our veth.
+            ReverseProxySupportEnabled = true;
+            TrustedReverseProxiesList = "10.200.200.1";
           };
         };
       };
@@ -360,6 +362,36 @@
         PrivateTmp = true;
         ProtectHome = true;
         ProtectSystem = "strict";
+      };
+    };
+
+    #
+    # Traefik
+    #
+
+    services.traefik.dynamicConfigOptions.http = {
+      routers.qbittorrent = {
+        rule = "Host(`qbittorrent.wijeproject.com`)";
+
+        entryPoints = [
+          "websecure"
+        ];
+
+        service = "qbittorrent";
+
+        tls.certResolver = "cloudflare";
+      };
+
+      services.qbittorrent.loadBalancer = {
+        # qBittorrent's recommended Traefik configuration does not pass
+        # the external Host header directly to the backend.
+        passHostHeader = false;
+
+        servers = [
+          {
+            url = "http://10.200.200.2:8080";
+          }
+        ];
       };
     };
 
