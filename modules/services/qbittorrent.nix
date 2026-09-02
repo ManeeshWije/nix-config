@@ -371,7 +371,7 @@
 
     services.traefik.dynamicConfigOptions.http = {
       routers.qbittorrent = {
-        rule = "Host(`qbittorrent.wijeproject.com`)";
+        rule = "Host(`qb.wijeproject.com`)";
 
         entryPoints = [
           "websecure"
