@@ -4,7 +4,7 @@
      enable = true;
 
       exports = ''
-        /storage 192.168.88.251(ro,sync,no_subtree_check)
+        /storage 192.168.88.251(rw,sync,no_subtree_check)
       '';
     };
 
