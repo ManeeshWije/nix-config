@@ -16,7 +16,7 @@
 
       options = [
         "nfsvers=4.2"
-        "ro"
+        "rw"
         "_netdev"
 
         # Don't make the entire Tars boot depend on Gargantua.

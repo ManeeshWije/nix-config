@@ -284,22 +284,19 @@
 
         Network.PortForwardingEnabled = false;
 
-        Preferences = {
-          # Explicitly preserve the modern qBittorrent behaviour.
-          BitTorrent.Session.QueueingSystemEnabled = false;
+        BitTorrent.Session = {
+          DefaultSavePath = "/storage/Downloads";
+          QueueingSystemEnabled = false;
+        };
 
-          WebUI = {
-            Address = "*";
+        Preferences.WebUI = {
+          Address = "*";
 
-            # Port-forward updater talks through 127.0.0.1.
-            LocalHostAuth = false;
+          LocalHostAuth = false;
+          UseUPnP = false;
 
-            UseUPnP = false;
-
-            # Traefik connects from the host side of our veth.
-            ReverseProxySupportEnabled = true;
-            TrustedReverseProxiesList = "10.200.200.1";
-          };
+          ReverseProxySupportEnabled = true;
+          TrustedReverseProxiesList = "10.200.200.1";
         };
       };
 
@@ -311,6 +308,10 @@
     systemd.services.qbittorrent = {
       bindsTo = ["qbittorrent-netns.service"];
       after = ["qbittorrent-netns.service"];
+
+      unitConfig.RequiresMountsFor = [
+        "/storage/Downloads"
+      ];
 
       serviceConfig = {
         NetworkNamespacePath = namespacePath;
