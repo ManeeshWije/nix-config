@@ -2,22 +2,7 @@
   flake.nixosModules.sonarr = {...}: {
     services.sonarr = {
       enable = true;
-
       openFirewall = false;
-
-      settings = {
-        server = {
-          port = 8989;
-          bindaddress = "127.0.0.1";
-        };
-
-        update = {
-          mechanism = "external";
-          automatically = false;
-        };
-
-        log.analyticsEnabled = false;
-      };
     };
 
     #

@@ -2,22 +2,7 @@
   flake.nixosModules.radarr = {...}: {
     services.radarr = {
       enable = true;
-
       openFirewall = false;
-
-      settings = {
-        server = {
-          port = 7878;
-          bindaddress = "127.0.0.1";
-        };
-
-        update = {
-          mechanism = "external";
-          automatically = false;
-        };
-
-        log.analyticsEnabled = false;
-      };
     };
 
     #

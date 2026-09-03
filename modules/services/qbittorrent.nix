@@ -280,28 +280,28 @@
       openFirewall = false;
 
       serverConfig = {
-        LegalNotice.Accepted = true;
-
-        Network.PortForwardingEnabled = false;
-
-        BitTorrent.Session = {
-          DefaultSavePath = "/storage/Downloads";
-          QueueingSystemEnabled = false;
-          DiskIOType = "SimplePreadPwrite";
-        };
-
-        Preferences.WebUI = {
-          Address = "*";
-
-          Username = "maneesh";
-          Password_PBKDF2 = "@ByteArray(oTM9gjuzZq0LvPPyL3mFng==:61MGOQrXrbtWoVImOb7in/1m/rA+F/ORUFqbleHSUcujc8YrRDI1ssStg+wUHLbI34QxkWlPNiABSgkAKujS+Q==)";
-
-          LocalHostAuth = false;
-          UseUPnP = false;
-
-          ReverseProxySupportEnabled = true;
-          TrustedReverseProxiesList = "10.200.200.1";
-        };
+        # LegalNotice.Accepted = true;
+        #
+        # Network.PortForwardingEnabled = false;
+        #
+        # BitTorrent.Session = {
+        #   DefaultSavePath = "/storage/Downloads";
+        #   QueueingSystemEnabled = false;
+        #   DiskIOType = "SimplePreadPwrite";
+        # };
+        #
+        # Preferences.WebUI = {
+        #   Address = "*";
+        #
+        #   Username = "maneesh";
+        #   Password_PBKDF2 = "@ByteArray(oTM9gjuzZq0LvPPyL3mFng==:61MGOQrXrbtWoVImOb7in/1m/rA+F/ORUFqbleHSUcujc8YrRDI1ssStg+wUHLbI34QxkWlPNiABSgkAKujS+Q==)";
+        #
+        #   LocalHostAuth = false;
+        #   UseUPnP = false;
+        #
+        #   ReverseProxySupportEnabled = true;
+        #   TrustedReverseProxiesList = "10.200.200.1";
+        # };
       };
 
       extraArgs = [
