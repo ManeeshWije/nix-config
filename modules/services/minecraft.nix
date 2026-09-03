@@ -42,6 +42,16 @@
         url = "https://cdn.modrinth.com/data/lzVo0Dll/versions/b1EqjxFs/fabric-permissions-api-0.7.0.jar";
         sha512 = "fd1961a4496cdc6cf22fbac0627a331407e97d3131f222641c1e370824adb3179e530e33e9e03adff1843e5556750edbb7abe0be7a241c7f0e3ca3ddc8b78ab7";
       };
+
+      natures-compass = fetchurl {
+        url = "https://cdn.modrinth.com/data/fPetb5Kh/versions/1X6iEfOy/NaturesCompass-26.2-2.5.1-fabric.jar";
+        sha512 = "3e596e8cf29f28d2fb827fd8cd1272c7914334f55779f1dcc19df2651dba28a593e2b5178852a55e5114b02e93c276a3b09282d9c174e5e7191ea2c4fc5370f7";
+      };
+
+      dynamic-lights = fetchurl {
+        url = "https://cdn.modrinth.com/data/7YjclEGc/versions/XAsq3xsq/dynamiclights-v1.9.3-mc1.17-26.2.9-mod.jar";
+        sha512 = "89bb5d380c5778dbca6d093a7dc82a280ab9c8142c801ccd04bbd6975ff6acf6110cef97b1641869f7bc6d963772f5689f00c90cea740d5420afed756f3caf2b";
+      };
     };
   in {
     imports = [
