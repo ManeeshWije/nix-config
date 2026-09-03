@@ -12,8 +12,10 @@
       jellyfin
       qbittorrent
       sonarr
+      radarr
       prowlarr
       flaresolverr
+      seerr
     ];
 
     # Bootloader.
