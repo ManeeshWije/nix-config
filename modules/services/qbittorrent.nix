@@ -287,6 +287,7 @@
         BitTorrent.Session = {
           DefaultSavePath = "/storage/Downloads";
           QueueingSystemEnabled = false;
+          DiskIOType = "SimplePreadPwrite";
         };
 
         Preferences.WebUI = {
