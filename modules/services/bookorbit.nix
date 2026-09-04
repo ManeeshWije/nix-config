@@ -32,7 +32,7 @@
     };
 
     #
-    # Environment files
+    # Secret environment files
     #
 
     sops.templates."bookorbit-app.env" = {
@@ -55,142 +55,172 @@
     };
 
     #
-    # Local persistent application state
+    # Docker containers
     #
-    # Nix creates these automatically.
+    # Docker named volumes are used for application/database state.
     #
-
-    systemd.tmpfiles.rules = [
-      "d /var/lib/bookorbit 0755 root root - -"
-      "d /var/lib/bookorbit/app 0755 root root - -"
-      "d /var/lib/bookorbit/postgres 0700 root root - -"
-    ];
-
-    #
-    # Containers
+    # These survive container recreation and avoid host-side UID/GID
+    # problems with PostgreSQL.
     #
 
-    virtualisation.oci-containers.backend = "docker";
+    virtualisation.oci-containers = {
+      backend = "docker";
 
-    virtualisation.oci-containers.containers = {
-      bookorbit-db = {
-        serviceName = "bookorbit-db";
+      containers = {
+        bookorbit-db = {
+          serviceName = "bookorbit-db";
 
-        image = postgresImage;
-        pull = "missing";
+          image = postgresImage;
+          pull = "missing";
 
-        environment = {
-          POSTGRES_USER = "bookorbit";
-          POSTGRES_DB = "bookorbit";
+          environment = {
+            POSTGRES_USER = "bookorbit";
+            POSTGRES_DB = "bookorbit";
 
-          PGDATA = "/var/lib/postgresql/data/pgdata";
+            # BookOrbit's current official Compose uses this layout.
+            PGDATA = "/var/lib/postgresql/data/pgdata";
+          };
+
+          environmentFiles = [
+            config.sops.templates."bookorbit-db.env".path
+          ];
+
+          volumes = [
+            # Docker-managed persistent PostgreSQL data.
+            "bookorbit-postgres:/var/lib/postgresql/data"
+          ];
+
+          # Database is exposed only on Tars' loopback interface.
+          #
+          # BookOrbit uses host networking, so it reaches Postgres at
+          # 127.0.0.1:5433.
+          ports = [
+            "127.0.0.1:5433:5432"
+          ];
         };
 
-        environmentFiles = [
-          config.sops.templates."bookorbit-db.env".path
-        ];
+        bookorbit = {
+          serviceName = "bookorbit";
 
-        volumes = [
-          "/var/lib/bookorbit/postgres:/var/lib/postgresql/data"
-        ];
+          image = bookorbitImage;
+          pull = "missing";
 
-        # Only the host / BookOrbit can access Postgres.
-        ports = [
-          "127.0.0.1:5433:5432"
-        ];
-      };
+          dependsOn = [
+            "bookorbit-db"
+          ];
 
-      bookorbit = {
-        serviceName = "bookorbit";
+          environment = {
+            NODE_ENV = "production";
+            PORT = "3000";
+            TZ = "America/Toronto";
 
-        image = bookorbitImage;
-        pull = "missing";
+            #
+            # PostgreSQL
+            #
 
-        dependsOn = [
-          "bookorbit-db"
-        ];
+            POSTGRES_HOST = "127.0.0.1";
+            POSTGRES_PORT = "5433";
+            POSTGRES_USER = "bookorbit";
+            POSTGRES_DB = "bookorbit";
 
-        environment = {
-          NODE_ENV = "production";
-          PORT = "3000";
+            #
+            # Public application URL
+            #
 
-          TZ = "America/Toronto";
+            APP_URL = "https://books.wijeproject.com";
+            CLIENT_URL = "https://books.wijeproject.com";
 
-          POSTGRES_HOST = "127.0.0.1";
-          POSTGRES_PORT = "5433";
-          POSTGRES_USER = "bookorbit";
-          POSTGRES_DB = "bookorbit";
+            #
+            # File permissions
+            #
+            # Gargantua's NFS export uses all_squash and maps Tars
+            # accesses to UID/GID 2000.
+            #
 
-          APP_URL = "https://books.wijeproject.com";
-          CLIENT_URL = "https://books.wijeproject.com";
+            PUID = "2000";
+            PGID = "2000";
 
-          #
-          # Existing library.
-          #
-          LIBRARY_BROWSE_ROOT = "/storage/books";
+            BOOKORBIT_FIX_PERMISSIONS = "true";
 
-          #
-          # BookOrbit's staging directory.
-          #
-          # It lives inside Downloads so hardlinks to completed
-          # qBittorrent files work.
-          #
-          BOOK_DOCK_PATH = "/storage/Downloads/.bookorbit-dock";
+            #
+            # Library
+            #
+            #   Gargantua: /storage/books
+            #   Tars:      /storage/books
+            #   BookOrbit: /storage/books
+            #
 
-          NODE_MAX_OLD_SPACE_SIZE = "2048";
+            LIBRARY_BROWSE_ROOT = "/storage/books";
 
-          BOOKORBIT_FIX_PERMISSIONS = "true";
-          LOG_LEVEL = "info";
+            #
+            # Book Dock
+            #
+            # This is BookOrbit's internal staging directory.
+            #
+            # It intentionally lives underneath /storage/Downloads so
+            # completed qBittorrent downloads and the Book Dock are on
+            # the same filesystem. That lets BookOrbit use hardlinks.
+            #
+            # Nix creates this automatically below.
+            #
+
+            BOOK_DOCK_PATH = "/storage/Downloads/.bookorbit-dock";
+
+            #
+            # Runtime
+            #
+
+            NODE_MAX_OLD_SPACE_SIZE = "2048";
+            LOG_LEVEL = "info";
+          };
+
+          environmentFiles = [
+            config.sops.templates."bookorbit-app.env".path
+          ];
+
+          volumes = [
+            #
+            # Persistent BookOrbit state.
+            #
+            # Users, application settings, library configuration,
+            # requests, download clients, sources, etc. persist here.
+            #
+
+            "bookorbit-app:/data"
+
+            #
+            #   /storage/Downloads
+            #   /storage/Downloads/.bookorbit-dock
+            #   /storage/books
+            #
+            # are all part of the same mount/filesystem.
+            #
+
+            "/storage:/storage"
+          ];
+
+          extraOptions = [
+            "--network=host"
+
+            "--init"
+
+            #
+            # Match BookOrbit's official hardened container setup.
+            #
+
+            "--read-only"
+            "--tmpfs=/tmp"
+
+            "--security-opt=no-new-privileges:true"
+
+            "--cap-drop=ALL"
+            "--cap-add=CHOWN"
+            "--cap-add=DAC_OVERRIDE"
+            "--cap-add=FOWNER"
+            "--cap-add=SETGID"
+            "--cap-add=SETUID"
+          ];
         };
-
-        environmentFiles = [
-          config.sops.templates."bookorbit-app.env".path
-        ];
-
-        volumes = [
-          #
-          # Persistent BookOrbit application state.
-          #
-          "/var/lib/bookorbit/app:/data"
-
-          #
-          # Mount /storage once rather than mounting books and
-          # Downloads independently. This keeps downloads,
-          # Book Dock and the library on one filesystem from
-          # BookOrbit's point of view, allowing hardlinks.
-          #
-          "/storage:/storage"
-        ];
-
-        #
-        # Host networking is intentional.
-        #
-        # BookOrbit can then directly access:
-        #
-        #   Prowlarr:
-        #     127.0.0.1:9696
-        #
-        #   qBittorrent namespace:
-        #     10.200.200.2:8080
-        #
-        networks = [
-          "host"
-        ];
-
-        extraOptions = [
-          "--init"
-          "--read-only"
-          "--tmpfs=/tmp"
-
-          "--security-opt=no-new-privileges:true"
-
-          "--cap-drop=ALL"
-          "--cap-add=CHOWN"
-          "--cap-add=DAC_OVERRIDE"
-          "--cap-add=FOWNER"
-          "--cap-add=SETGID"
-          "--cap-add=SETUID"
-        ];
       };
     };
 
@@ -200,16 +230,21 @@
 
     systemd.services.bookorbit = {
       #
-      # This causes Tars' existing NFS automount to mount Gargantua
-      # before Docker starts BookOrbit.
+      # Make sure Gargantua's NFS filesystem is actually mounted before
+      # Docker starts BookOrbit.
       #
+
       unitConfig.RequiresMountsFor = [
         "/storage"
       ];
 
-      # create BookOrbit's required staging area automatically and
-      # wait until PostgreSQL is actually ready.
       #
+      # Automatically create BookOrbit's staging directory.
+      #
+      # Then wait until PostgreSQL is actually accepting connections
+      # before launching BookOrbit.
+      #
+
       preStart = ''
         ${pkgs.coreutils}/bin/mkdir -p \
           /storage/Downloads/.bookorbit-dock
