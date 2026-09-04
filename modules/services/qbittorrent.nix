@@ -17,6 +17,28 @@
     hostVethAddress = "10.200.200.1/30";
     namespaceVethAddress = "10.200.200.2/30";
 
+    #
+    # qBittorrent 5.1.4
+    #
+    # BookOrbit's current qBittorrent integration is not compatible
+    # with the WebAPI authentication changes introduced in qB 5.2.
+    #
+    # Pin the final 5.1.x release while keeping the rest of Tars on
+    # nixpkgs-unstable.
+    #
+    qbittorrentPackage = pkgs.qbittorrent-nox.overrideAttrs (_old: {
+      version = "5.1.4";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "qbittorrent";
+        repo = "qBittorrent";
+        rev = "release-5.1.4";
+
+        # Exact hash used by nixpkgs nixos-25.11.
+        hash = "sha256-9RfKir/e+8Kvln20F+paXqtWzC3KVef2kNGyk1YpSv4=";
+      };
+    });
+
     protonDns = pkgs.writeText "qbittorrent-resolv.conf" ''
       nameserver 10.2.0.1
       nameserver 2a07:b944::2:1
@@ -126,13 +148,17 @@
             current_port="$port"
           fi
 
-          # Proton's lease is 60 seconds.
-          # Their documentation recommends renewing every 45 seconds.
+          # Proton's NAT-PMP lease is 60 seconds.
+          # Renew before expiry.
           sleep 45
         done
       '';
     };
   in {
+    #
+    # Proton WireGuard secret
+    #
+
     sops.secrets."proton-wireguard-private-key" = {
       sopsFile = ../secrets/proton.yaml;
       key = "wireguard_private_key";
@@ -146,10 +172,17 @@
     systemd.services.qbittorrent-netns = {
       description = "qBittorrent ProtonVPN network namespace";
 
-      wantedBy = ["multi-user.target"];
+      wantedBy = [
+        "multi-user.target"
+      ];
 
-      wants = ["network-online.target"];
-      after = ["network-online.target"];
+      wants = [
+        "network-online.target"
+      ];
+
+      after = [
+        "network-online.target"
+      ];
 
       before = [
         "qbittorrent.service"
@@ -169,7 +202,10 @@
       script = ''
         set -euo pipefail
 
+        #
         # Clean up leftovers from a failed previous start.
+        #
+
         ip link del ${hostVeth} 2>/dev/null || true
         ip link del ${wgInterface} 2>/dev/null || true
         ip netns del ${namespace} 2>/dev/null || true
@@ -185,20 +221,19 @@
         #
         # WireGuard
         #
-        # Important:
+        # Create WireGuard in the host namespace first.
         #
-        # Create it in the HOST namespace first, then move it.
-        #
-        # WireGuard's encrypted UDP socket remains in the namespace where
-        # the interface was created, while the cleartext interface lives
-        # inside the qBittorrent namespace.
+        # Its encrypted UDP socket remains in the host namespace after
+        # moving the interface into the qBittorrent namespace.
         #
 
         ip link add ${wgInterface} type wireguard
 
         ip link set ${wgInterface} netns ${namespace}
 
-        ip -n ${namespace} link set ${wgInterface} mtu 1420
+        ip -n ${namespace} link set \
+          ${wgInterface} \
+          mtu 1420
 
         ip -n ${namespace} address add \
           10.2.0.2/32 \
@@ -216,10 +251,12 @@
             endpoint '169.150.196.68:51820' \
             persistent-keepalive 25
 
-        ip -n ${namespace} link set ${wgInterface} up
+        ip -n ${namespace} link set \
+          ${wgInterface} \
+          up
 
         #
-        # The ONLY Internet default routes in this namespace.
+        # The only Internet default routes in the namespace.
         #
 
         ip -n ${namespace} route add \
@@ -231,10 +268,9 @@
           dev ${wgInterface}
 
         #
-        # Tiny host <-> namespace link.
+        # Host <-> qBittorrent namespace veth.
         #
-        # Notice that there is deliberately NO default route through this.
-        # It exists only for WebUI access from tars.
+        # There is deliberately no default route through this link.
         #
 
         ip link add ${hostVeth} \
@@ -247,13 +283,17 @@
 
         ip link set ${hostVeth} up
 
-        ip link set ${namespaceVeth} netns ${namespace}
+        ip link set \
+          ${namespaceVeth} \
+          netns ${namespace}
 
         ip -n ${namespace} address add \
           ${namespaceVethAddress} \
           dev ${namespaceVeth}
 
-        ip -n ${namespace} link set ${namespaceVeth} up
+        ip -n ${namespace} link set \
+          ${namespaceVeth} \
+          up
 
         echo "qBittorrent network namespace ready"
       '';
@@ -271,38 +311,31 @@
     services.qbittorrent = {
       enable = true;
 
+      #
+      # Pin qBittorrent itself to 5.1.4.
+      #
+
+      package = qbittorrentPackage;
+
       webuiPort = 8080;
 
       # Proton chooses this dynamically.
       torrentingPort = null;
 
-      # Do NOT open 8080 or the torrent port directly on tars.
+      # Traefik/API access happens over the veth.
       openFirewall = false;
 
-      serverConfig = {
-        # LegalNotice.Accepted = true;
-        #
-        # Network.PortForwardingEnabled = false;
-        #
-        # BitTorrent.Session = {
-        #   DefaultSavePath = "/storage/Downloads";
-        #   QueueingSystemEnabled = false;
-        #   DiskIOType = "SimplePreadPwrite";
-        # };
-        #
-        # Preferences.WebUI = {
-        #   Address = "*";
-        #
-        #   Username = "maneesh";
-        #   Password_PBKDF2 = "@ByteArray(oTM9gjuzZq0LvPPyL3mFng==:61MGOQrXrbtWoVImOb7in/1m/rA+F/ORUFqbleHSUcujc8YrRDI1ssStg+wUHLbI34QxkWlPNiABSgkAKujS+Q==)";
-        #
-        #   LocalHostAuth = false;
-        #   UseUPnP = false;
-        #
-        #   ReverseProxySupportEnabled = true;
-        #   TrustedReverseProxiesList = "10.200.200.1";
-        # };
-      };
+      #
+      # IMPORTANT:
+      #
+      # Leave this empty.
+      #
+      # qBittorrent owns qBittorrent.conf so credentials, categories,
+      # download paths and settings changed in the WebUI persist across
+      # restarts.
+      #
+
+      serverConfig = {};
 
       extraArgs = [
         "--confirm-legal-notice"
@@ -310,8 +343,18 @@
     };
 
     systemd.services.qbittorrent = {
-      bindsTo = ["qbittorrent-netns.service"];
-      after = ["qbittorrent-netns.service"];
+      bindsTo = [
+        "qbittorrent-netns.service"
+      ];
+
+      after = [
+        "qbittorrent-netns.service"
+      ];
+
+      #
+      # Do not let qBittorrent start against an unmounted local
+      # /storage/Downloads directory.
+      #
 
       unitConfig.RequiresMountsFor = [
         "/storage/Downloads"
@@ -320,21 +363,29 @@
       serviceConfig = {
         NetworkNamespacePath = namespacePath;
 
-        # qBittorrent resolves DNS through Proton rather than the host.
+        #
+        # qBittorrent resolves DNS through Proton.
+        #
+
         BindReadOnlyPaths = [
           "${protonDns}:/etc/resolv.conf"
         ];
+
+        Restart = "on-failure";
+        RestartSec = "5s";
       };
     };
 
     #
-    # Proton NAT-PMP lease + qBittorrent port synchronisation
+    # Proton NAT-PMP port forwarding
     #
 
     systemd.services.proton-qbittorrent-port-forward = {
       description = "ProtonVPN port forwarding for qBittorrent";
 
-      wantedBy = ["multi-user.target"];
+      wantedBy = [
+        "multi-user.target"
+      ];
 
       bindsTo = [
         "qbittorrent-netns.service"
@@ -378,6 +429,7 @@
       routers.qbittorrent = {
         rule = "Host(`qb.wijeproject.com`)";
 
+        # Internal only.
         entryPoints = [
           "websecure"
         ];
@@ -388,8 +440,6 @@
       };
 
       services.qbittorrent.loadBalancer = {
-        # qBittorrent's recommended Traefik configuration does not pass
-        # the external Host header directly to the backend.
         passHostHeader = false;
 
         servers = [
@@ -400,7 +450,10 @@
       };
     };
 
-    # Useful while you're initially validating this setup.
+    #
+    # Debugging/admin tools
+    #
+
     environment.systemPackages = with pkgs; [
       iproute2
       wireguard-tools
