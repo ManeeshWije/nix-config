@@ -17,6 +17,8 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
 
+    nixpkgs-qbittorrent.url = "github:nixos/nixpkgs/nixos-25.11";
+
     dotfiles = {
       url = "github:ManeeshWije/dotfiles";
       flake = false;

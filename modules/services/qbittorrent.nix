@@ -1,6 +1,7 @@
 {...}: {
   flake.nixosModules.qbittorrent = {
     config,
+    inputs,
     lib,
     pkgs,
     ...
@@ -20,24 +21,14 @@
     #
     # qBittorrent 5.1.4
     #
-    # BookOrbit's current qBittorrent integration is not compatible
-    # with the WebAPI authentication changes introduced in qB 5.2.
+    # IMPORTANT:
     #
-    # Pin the final 5.1.x release while keeping the rest of Tars on
-    # nixpkgs-unstable.
+    # This is the actual pre-packaged qBittorrent from nixos-25.11.
+    # We are NOT overriding its src and therefore are NOT asking Tars to
+    # compile qBittorrent against our unstable package set.
     #
-    qbittorrentPackage = pkgs.qbittorrent-nox.overrideAttrs (_old: {
-      version = "5.1.4";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "qbittorrent";
-        repo = "qBittorrent";
-        rev = "release-5.1.4";
-
-        # Exact hash used by nixpkgs nixos-25.11.
-        hash = "sha256-9RfKir/e+8Kvln20F+paXqtWzC3KVef2kNGyk1YpSv4=";
-      };
-    });
+    qbittorrentPackage =
+      inputs.nixpkgs-qbittorrent.legacyPackages.${pkgs.stdenv.hostPlatform.system}.qbittorrent-nox;
 
     protonDns = pkgs.writeText "qbittorrent-resolv.conf" ''
       nameserver 10.2.0.1
@@ -221,10 +212,8 @@
         #
         # WireGuard
         #
-        # Create WireGuard in the host namespace first.
-        #
-        # Its encrypted UDP socket remains in the host namespace after
-        # moving the interface into the qBittorrent namespace.
+        # Create it in the host namespace first, then move the interface
+        # into the qBittorrent namespace.
         #
 
         ip link add ${wgInterface} type wireguard
@@ -256,7 +245,7 @@
           up
 
         #
-        # The only Internet default routes in the namespace.
+        # The only Internet default routes in this namespace.
         #
 
         ip -n ${namespace} route add \
@@ -268,9 +257,9 @@
           dev ${wgInterface}
 
         #
-        # Host <-> qBittorrent namespace veth.
+        # Host <-> namespace veth.
         #
-        # There is deliberately no default route through this link.
+        # No default route is provided through this interface.
         #
 
         ip link add ${hostVeth} \
@@ -312,27 +301,22 @@
       enable = true;
 
       #
-      # Pin qBittorrent itself to 5.1.4.
+      # Pre-built qBittorrent 5.1.4 from nixos-25.11.
       #
 
       package = qbittorrentPackage;
 
       webuiPort = 8080;
 
-      # Proton chooses this dynamically.
+      # Proton sets this dynamically.
       torrentingPort = null;
 
-      # Traefik/API access happens over the veth.
       openFirewall = false;
 
       #
-      # IMPORTANT:
+      # Keep this EMPTY.
       #
-      # Leave this empty.
-      #
-      # qBittorrent owns qBittorrent.conf so credentials, categories,
-      # download paths and settings changed in the WebUI persist across
-      # restarts.
+      # qBittorrent owns qBittorrent.conf so UI configuration persists.
       #
 
       serverConfig = {};
@@ -352,8 +336,7 @@
       ];
 
       #
-      # Do not let qBittorrent start against an unmounted local
-      # /storage/Downloads directory.
+      # Never download into an accidentally-unmounted local /storage.
       #
 
       unitConfig.RequiresMountsFor = [
@@ -364,7 +347,7 @@
         NetworkNamespacePath = namespacePath;
 
         #
-        # qBittorrent resolves DNS through Proton.
+        # DNS inside the VPN namespace goes through Proton.
         #
 
         BindReadOnlyPaths = [
@@ -377,7 +360,7 @@
     };
 
     #
-    # Proton NAT-PMP port forwarding
+    # Proton NAT-PMP lease + qBittorrent port synchronization
     #
 
     systemd.services.proton-qbittorrent-port-forward = {
@@ -451,7 +434,7 @@
     };
 
     #
-    # Debugging/admin tools
+    # Useful admin/debugging tools
     #
 
     environment.systemPackages = with pkgs; [
