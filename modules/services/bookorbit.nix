@@ -57,11 +57,6 @@
     #
     # Docker containers
     #
-    # Docker named volumes are used for application/database state.
-    #
-    # These survive container recreation and avoid host-side UID/GID
-    # problems with PostgreSQL.
-    #
 
     virtualisation.oci-containers = {
       backend = "docker";
@@ -76,8 +71,6 @@
           environment = {
             POSTGRES_USER = "bookorbit";
             POSTGRES_DB = "bookorbit";
-
-            # BookOrbit's current official Compose uses this layout.
             PGDATA = "/var/lib/postgresql/data/pgdata";
           };
 
@@ -86,14 +79,9 @@
           ];
 
           volumes = [
-            # Docker-managed persistent PostgreSQL data.
             "bookorbit-postgres:/var/lib/postgresql/data"
           ];
 
-          # Database is exposed only on Tars' loopback interface.
-          #
-          # BookOrbit uses host networking, so it reaches Postgres at
-          # 127.0.0.1:5433.
           ports = [
             "127.0.0.1:5433:5432"
           ];
@@ -114,28 +102,13 @@
             PORT = "3000";
             TZ = "America/Toronto";
 
-            #
-            # PostgreSQL
-            #
-
             POSTGRES_HOST = "127.0.0.1";
             POSTGRES_PORT = "5433";
             POSTGRES_USER = "bookorbit";
             POSTGRES_DB = "bookorbit";
 
-            #
-            # Public application URL
-            #
-
             APP_URL = "https://books.wijeproject.com";
             CLIENT_URL = "https://books.wijeproject.com";
-
-            #
-            # File permissions
-            #
-            # Gargantua's NFS export uses all_squash and maps Tars
-            # accesses to UID/GID 2000.
-            #
 
             PUID = "2000";
             PGID = "2000";
@@ -143,32 +116,14 @@
             BOOKORBIT_FIX_PERMISSIONS = "true";
 
             #
-            # Library
+            # Existing library on Gargantua
             #
-            #   Gargantua: /storage/books
-            #   Tars:      /storage/books
-            #   BookOrbit: /storage/books
-            #
-
-            LIBRARY_BROWSE_ROOT = "/storage/books";
+            LIBRARY_BROWSE_ROOT = "/storage/books-library";
 
             #
-            # Book Dock
+            # BookOrbit staging area
             #
-            # This is BookOrbit's internal staging directory.
-            #
-            # It intentionally lives underneath /storage/Downloads so
-            # completed qBittorrent downloads and the Book Dock are on
-            # the same filesystem. That lets BookOrbit use hardlinks.
-            #
-            # Nix creates this automatically below.
-            #
-
             BOOK_DOCK_PATH = "/storage/Downloads/.bookorbit-dock";
-
-            #
-            # Runtime
-            #
 
             NODE_MAX_OLD_SPACE_SIZE = "2048";
             LOG_LEVEL = "info";
@@ -179,34 +134,13 @@
           ];
 
           volumes = [
-            #
-            # Persistent BookOrbit state.
-            #
-            # Users, application settings, library configuration,
-            # requests, download clients, sources, etc. persist here.
-            #
-
             "bookorbit-app:/data"
-
-            #
-            #   /storage/Downloads
-            #   /storage/Downloads/.bookorbit-dock
-            #   /storage/books
-            #
-            # are all part of the same mount/filesystem.
-            #
-
             "/storage:/storage"
           ];
 
           extraOptions = [
             "--network=host"
-
             "--init"
-
-            #
-            # Match BookOrbit's official hardened container setup.
-            #
 
             "--read-only"
             "--tmpfs=/tmp"
@@ -229,21 +163,9 @@
     #
 
     systemd.services.bookorbit = {
-      #
-      # Make sure Gargantua's NFS filesystem is actually mounted before
-      # Docker starts BookOrbit.
-      #
-
       unitConfig.RequiresMountsFor = [
         "/storage"
       ];
-
-      #
-      # Automatically create BookOrbit's staging directory.
-      #
-      # Then wait until PostgreSQL is actually accepting connections
-      # before launching BookOrbit.
-      #
 
       preStart = ''
         ${pkgs.coreutils}/bin/mkdir -p \
