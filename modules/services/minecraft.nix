@@ -57,6 +57,11 @@
         url = "https://cdn.modrinth.com/data/OhduvhIc/versions/InpIvPQ1/veinminer-fabric-2.12.1.jar";
         sha512 = "ddb20ee9f053e288c5912dea9abfe2a4447797ea77e67f80388fed73935b97ab5116603747ce699f8bff965e0965d1099446df1ff90ee3d8527a7fc017585977";
       };
+
+      fabric-language-kotlin = fetchurl {
+        url = "https://cdn.modrinth.com/data/Ha28R6CL/versions/bdhiINYC/fabric-language-kotlin-1.13.13%2Bkotlin.2.4.10.jar";
+        sha512 = "9a63c35a550b0362b7b25ff045d93709c7b0dae08c89076cba422813fdfb9e5f5dd021ed3afac9f82e74e95b88c249e8f68b240717151540ca3e88cc27fb9c77";
+      };
     };
   in {
     imports = [
