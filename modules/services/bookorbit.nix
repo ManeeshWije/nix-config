@@ -4,7 +4,8 @@
     pkgs,
     ...
   }: let
-    bookorbitImage = "ghcr.io/bookorbit/bookorbit:2.5.0";
+    # bookorbitImage = "ghcr.io/bookorbit/bookorbit:2.5.0";
+    bookorbitImage = "ghcr.io/bookorbit/bookorbit:sha-67b2741f7c43";
     postgresImage = "pgvector/pgvector:pg18";
   in {
     #
