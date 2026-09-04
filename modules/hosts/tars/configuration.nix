@@ -16,6 +16,7 @@
       prowlarr
       flaresolverr
       seerr
+      bookorbit
     ];
 
     # Bootloader.
