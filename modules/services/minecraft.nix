@@ -52,6 +52,11 @@
         url = "https://cdn.modrinth.com/data/7YjclEGc/versions/XAsq3xsq/dynamiclights-v1.9.3-mc1.17-26.2.9-mod.jar";
         sha512 = "89bb5d380c5778dbca6d093a7dc82a280ab9c8142c801ccd04bbd6975ff6acf6110cef97b1641869f7bc6d963772f5689f00c90cea740d5420afed756f3caf2b";
       };
+
+      veinminer = fetchurl {
+        url = "https://cdn.modrinth.com/data/OhduvhIc/versions/InpIvPQ1/veinminer-fabric-2.12.1.jar";
+        sha512 = "ddb20ee9f053e288c5912dea9abfe2a4447797ea77e67f80388fed73935b97ab5116603747ce699f8bff965e0965d1099446df1ff90ee3d8527a7fc017585977";
+      };
     };
   in {
     imports = [
