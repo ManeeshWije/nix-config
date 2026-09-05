@@ -83,7 +83,7 @@
           jre_headless = pkgs.openjdk25_headless;
         };
 
-        jvmOpts = "-Xms2G -Xmx5G -XX:+UseG1GC";
+        jvmOpts = "-Xms2G -Xmx4G -XX:+UseG1GC";
 
         serverProperties = {
           server-port = 25565;
@@ -95,8 +95,8 @@
           online-mode = true;
           white-list = true;
 
-          view-distance = 16;
-          simulation-distance = 16;
+          view-distance = 12;
+          simulation-distance = 12;
 
           enable-rcon = false;
           enable-query = false;
