@@ -33,9 +33,6 @@
     #
     services.jellyfin = {
       enable = true;
-
-      # Do NOT expose :8096 through the NixOS firewall.
-      # Traefik is our public entrypoint.
       openFirewall = false;
     };
 

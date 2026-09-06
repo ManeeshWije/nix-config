@@ -31,8 +31,7 @@
       inputs.nixpkgs-qbittorrent.legacyPackages.${pkgs.stdenv.hostPlatform.system}.qbittorrent-nox;
 
     protonDns = pkgs.writeText "qbittorrent-resolv.conf" ''
-      nameserver 10.2.0.1
-      nameserver 2a07:b944::2:1
+     nameserver 10.2.0.1
     '';
 
     protonPortForward = pkgs.writeShellApplication {
@@ -228,15 +227,11 @@
           10.2.0.2/32 \
           dev ${wgInterface}
 
-        ip -n ${namespace} -6 address add \
-          2a07:b944::2:2/128 \
-          dev ${wgInterface}
-
         ip netns exec ${namespace} \
           wg set ${wgInterface} \
             private-key ${config.sops.secrets."proton-wireguard-private-key".path} \
             peer '6tGMeS0XSeK2kFkDgAbAdQyWi9xYT74lO5KPEWdkrC0=' \
-            allowed-ips '0.0.0.0/0,::/0' \
+            allowed-ips '0.0.0.0/0' \
             endpoint '169.150.196.68:51820' \
             persistent-keepalive 25
 
@@ -249,10 +244,6 @@
         #
 
         ip -n ${namespace} route add \
-          default \
-          dev ${wgInterface}
-
-        ip -n ${namespace} -6 route add \
           default \
           dev ${wgInterface}
 
@@ -299,31 +290,8 @@
 
     services.qbittorrent = {
       enable = true;
-
-      #
-      # Pre-built qBittorrent 5.1.4 from nixos-25.11.
-      #
-
       package = qbittorrentPackage;
-
-      webuiPort = 8080;
-
-      # Proton sets this dynamically.
-      torrentingPort = null;
-
-      openFirewall = false;
-
-      #
-      # Keep this EMPTY.
-      #
-      # qBittorrent owns qBittorrent.conf so UI configuration persists.
-      #
-
-      serverConfig = {};
-
-      extraArgs = [
-        "--confirm-legal-notice"
-      ];
+      extraArgs = ["--confirm-legal-notice"];
     };
 
     systemd.services.qbittorrent = {

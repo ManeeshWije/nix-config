@@ -22,8 +22,6 @@
       routers.sonarr = {
         rule = "Host(`sonarr.wijeproject.com`)";
 
-        # Internal only.
-        # Do NOT add websecure-ext.
         entryPoints = [
           "websecure"
         ];
