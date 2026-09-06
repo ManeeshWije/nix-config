@@ -67,6 +67,11 @@
         url = "https://cdn.modrinth.com/data/5ibSyLAz/versions/XqW7xO2k/inventorysorter-fabric-3.0.0%2Bmc26.2.jar";
         sha512 = "0c40982b56ad9fd55575fa5378b82c35395ec432aca22bcf61d2f6bbe6e72862bdc4895535db107365ef61486869d35ae75419f460491c5a09d99bdef5aed152";
       };
+
+      xaeros-minimap = fetchurl {
+        url = "https://cdn.modrinth.com/data/1bokaNcj/versions/W7vHFz3T/xaerominimap-fabric-26.2-26.4.2.jar";
+        sha512 = "dba00f85308524d9d65c559bc48456c8b65cef58eb54891e069cbaacb6e2f633d279b0d65325f510e3d9e590b67e6f5bdb7c816ada484a0d018850267fbc9131";
+      };
     };
   in {
     imports = [
