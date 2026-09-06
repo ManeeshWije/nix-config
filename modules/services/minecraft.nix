@@ -62,6 +62,11 @@
         url = "https://cdn.modrinth.com/data/Ha28R6CL/versions/bdhiINYC/fabric-language-kotlin-1.13.13%2Bkotlin.2.4.10.jar";
         sha512 = "9a63c35a550b0362b7b25ff045d93709c7b0dae08c89076cba422813fdfb9e5f5dd021ed3afac9f82e74e95b88c249e8f68b240717151540ca3e88cc27fb9c77";
       };
+
+      inventory-sorting = fetchurl {
+        url = "https://cdn.modrinth.com/data/5ibSyLAz/versions/XqW7xO2k/inventorysorter-fabric-3.0.0%2Bmc26.2.jar";
+        sha512 = "0c40982b56ad9fd55575fa5378b82c35395ec432aca22bcf61d2f6bbe6e72862bdc4895535db107365ef61486869d35ae75419f460491c5a09d99bdef5aed152";
+      };
     };
   in {
     imports = [
