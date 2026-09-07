@@ -26,6 +26,7 @@ _: {
       onlyoffice-desktopeditors
       obs-studio
       gimp
+      jellyfin-desktop
     ];
 
     home.pointerCursor = {
