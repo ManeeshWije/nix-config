@@ -19,6 +19,11 @@
 
     nixpkgs-qbittorrent.url = "github:nixos/nixpkgs/nixos-25.11";
 
+    bookorbit-open-plugins = {
+      url = "github:orbit-plugins/bookorbit-open-plugins";
+      flake = false;
+    };
+
     dotfiles = {
       url = "github:ManeeshWije/dotfiles";
       flake = false;

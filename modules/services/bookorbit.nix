@@ -1,6 +1,7 @@
 {...}: {
   flake.nixosModules.bookorbit = {
     config,
+    inputs,
     pkgs,
     ...
   }: let
@@ -137,6 +138,7 @@
           volumes = [
             "bookorbit-app:/data"
             "/storage:/storage"
+            "${inputs.bookorbit-open-plugins}/indexers/project-gutenberg:/data/plugins/indexers/project-gutenberg:ro"
           ];
 
           extraOptions = [
