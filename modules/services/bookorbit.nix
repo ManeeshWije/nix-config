@@ -139,6 +139,7 @@
             "bookorbit-app:/data"
             "/storage:/storage"
             "${inputs.bookorbit-open-plugins}/indexers/project-gutenberg:/data/plugins/indexers/project-gutenberg:ro"
+            "${inputs.bookorbit-plugins-extra}/indexers/libgen:/data/plugins/indexers/libgen:ro"
           ];
 
           extraOptions = [

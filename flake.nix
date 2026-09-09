@@ -24,6 +24,11 @@
       flake = false;
     };
 
+    bookorbit-plugins-extra = {
+      url = "github:orbit-plugins/bookorbit-plugins-extra";
+      flake = false;
+    };
+
     dotfiles = {
       url = "github:ManeeshWije/dotfiles";
       flake = false;
