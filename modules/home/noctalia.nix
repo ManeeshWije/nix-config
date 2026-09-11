@@ -51,7 +51,7 @@
 
           directory = dfRoot + /pictures;
 
-          default.path = dfRoot + /pictures/half-dome.jpg;
+          default.path = dfRoot + /pictures/link.jpg;
         };
 
         widget.gap = {
