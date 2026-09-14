@@ -35,11 +35,11 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1789232220,
-        "narHash": "sha256-JHSGw9S/3eujA9xZQOvWuH9iX8HoHcbBR8CcQu/RiTw=",
+        "lastModified": 1789419204,
+        "narHash": "sha256-gCT+fez6ybgVE66fRT4Bz/HCfTEJGX+q1uSvrh7jkac=",
         "owner": "ManeeshWije",
         "repo": "dotfiles",
-        "rev": "2f27b3d5733d056ba0b729d2f68ed19749dbeab8",
+        "rev": "862f40bcde72e1dc5c0fae6e367572abf0b3fe08",
         "type": "github"
       },
       "original": {
@@ -221,11 +221,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1789127271,
-        "narHash": "sha256-vL/Fpo7Zxa7wvO8V5FAToUBvP+K3XsMB1wUglTtd/J0=",
+        "lastModified": 1789417814,
+        "narHash": "sha256-xV9fcqtH6jJLVBF3ocqBBwZkPKEke+BujhEwT4Ye9Tc=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "24cfdc1f9344b90a1eee329a3906e2f39f4d0f1e",
+        "rev": "d40fd26f323c898b0c195d41aa5efadd85f57832",
         "type": "github"
       },
       "original": {
