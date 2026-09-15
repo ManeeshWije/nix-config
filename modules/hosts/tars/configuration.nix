@@ -18,6 +18,7 @@
       seerr
       bookorbit
       watchtogether
+      personalwebsite
     ];
 
     # Bootloader.
