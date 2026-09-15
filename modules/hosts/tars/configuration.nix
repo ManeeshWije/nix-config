@@ -17,6 +17,7 @@
       flaresolverr
       seerr
       bookorbit
+      watchtogether
     ];
 
     # Bootloader.
