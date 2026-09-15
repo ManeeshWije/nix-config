@@ -24,6 +24,7 @@ _: {
       mpv
       tree-sitter
       yazi
+      ncspot
       poppler
       resvg
       ffmpeg
