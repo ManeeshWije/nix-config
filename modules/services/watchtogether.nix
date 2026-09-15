@@ -66,7 +66,7 @@
       mode = "0400";
 
       content = ''
-        DATABASE_URL=postgres://watchtogether:${config.sops.placeholder."postgres-password"}@127.0.0.1:5433/watchtogether
+        DATABASE_URL=postgres://watchtogether:${config.sops.placeholder."postgres-password"}@127.0.0.1:5434/watchtogether
 
         AWS_ACCESS_KEY_ID=${config.sops.placeholder."aws-access-key-id"}
         AWS_SECRET_ACCESS_KEY=${config.sops.placeholder."aws-secret-access-key"}
@@ -109,7 +109,7 @@
           ];
 
           ports = [
-            "127.0.0.1:5433:5432"
+            "127.0.0.1:5434:5432"
           ];
         };
 
