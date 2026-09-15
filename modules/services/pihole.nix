@@ -12,14 +12,7 @@
         };
 
         misc.dnsmasq_lines = [
-          # Everything under *.wijeproject.com goes to local Traefik by default.
-          # The "*." means this does NOT hijack wijeproject.com itself.
-          "address=/*.wijeproject.com/192.168.88.251"
-
-          # Exceptions: resolve these normally through upstream DNS.
-          "server=/watch.wijeproject.com/#"
-          "server=/www.wijeproject.com/#"
-          "server=/wijeproject.com/#"
+          "address=/wijeproject.com/192.168.88.251"
         ];
       };
 
