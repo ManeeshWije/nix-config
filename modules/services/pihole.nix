@@ -19,6 +19,7 @@
           # Exceptions: resolve these normally through upstream DNS.
           "server=/watch.wijeproject.com/#"
           "server=/www.wijeproject.com/#"
+          "server=/wijeproject.com/#"
         ];
       };
 
