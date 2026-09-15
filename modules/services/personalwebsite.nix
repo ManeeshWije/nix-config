@@ -25,7 +25,6 @@
             "--init"
 
             "--security-opt=no-new-privileges:true"
-            "--cap-drop=ALL"
           ];
         };
       };
