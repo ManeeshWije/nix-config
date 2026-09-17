@@ -4,7 +4,7 @@
       user
       sshd
       docker
-      # pihole
+      pihole
       traefik
       sops
       minecraft
