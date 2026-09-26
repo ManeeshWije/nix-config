@@ -18,6 +18,7 @@
       seerr
       bookorbit
       downtify
+      explo
       watchtogether
       personalwebsite
     ];
