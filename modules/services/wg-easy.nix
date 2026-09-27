@@ -19,7 +19,7 @@
     };
 
     # Load modules on the host instead of granting the container SYS_MODULE.
-    boot.kernelModules = ["wireguard" "iptable_nat" "iptable_filter"];
+    boot.kernelModules = ["wireguard" "nf_tables" "nft_chain_nat" "nft_compat"];
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
     virtualisation.oci-containers = {
@@ -29,6 +29,22 @@
         serviceName = "wg-easy";
         image = "ghcr.io/wg-easy/wg-easy:15";
         pull = "missing";
+
+        # The image defaults to iptables-legacy. Use its bundled nft backend
+        # with Tars's stock kernel, then launch the image's normal command.
+        cmd = [
+          "/bin/sh"
+          "-ec"
+          ''
+            for table in iptables ip6tables; do
+              update-alternatives --install "/usr/sbin/$table" "$table" "/usr/sbin/$table-nft" 20 \
+                --slave "/usr/sbin/$table-restore" "$table-restore" "/usr/sbin/$table-nft-restore" \
+                --slave "/usr/sbin/$table-save" "$table-save" "/usr/sbin/$table-nft-save"
+              update-alternatives --set "$table" "/usr/sbin/$table-nft"
+            done
+            exec /usr/bin/dumb-init node server/index.mjs
+          ''
+        ];
 
         environment = {
           TZ = "America/Toronto";
