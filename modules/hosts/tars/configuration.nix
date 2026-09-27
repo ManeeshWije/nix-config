@@ -6,6 +6,7 @@
       docker
       pihole
       traefik
+      wg-easy
       sops
       minecraft
       backup-tars
