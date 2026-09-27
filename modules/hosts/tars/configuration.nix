@@ -1,5 +1,9 @@
 {inputs, ...}: {
-  flake.nixosModules.tars = {pkgs, ...}: {
+  flake.nixosModules.tars = {
+    lib,
+    pkgs,
+    ...
+  }: {
     imports = with inputs.self.nixosModules; [
       user
       sshd
@@ -31,6 +35,23 @@
 
     # Use latest kernel.
     # boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    # wg-easy's stock Docker image uses iptables-legacy. Compile its NAT and
+    # filter modules into the host kernel; boot.kernelModules alone cannot
+    # enable features absent from the kernel build. Requires a kernel build
+    # and reboot. This leaves the host's existing firewall backend unchanged.
+    boot.kernelPatches = [
+      {
+        name = "wg-easy-legacy-iptables";
+        patch = null;
+        structuredExtraConfig = with lib.kernel; {
+          NETFILTER_XTABLES_LEGACY = yes;
+          IP_NF_IPTABLES_LEGACY = module;
+          IP_NF_FILTER = module;
+          IP_NF_NAT = module;
+        };
+      }
+    ];
 
     networking.hostName = "tars"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
