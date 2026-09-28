@@ -93,7 +93,7 @@
           serviceName = "bookorbit";
 
           image = bookorbitImage;
-          pull = "missing";
+          pull = "always";
 
           dependsOn = [
             "bookorbit-db"

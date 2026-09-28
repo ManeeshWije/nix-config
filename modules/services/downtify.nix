@@ -7,7 +7,7 @@
         serviceName = "downtify";
 
         image = "ghcr.io/henriquesebastiao/downtify:latest";
-        pull = "missing";
+        pull = "always";
 
         environment = {
           DOWNTIFY_PORT = "8000";

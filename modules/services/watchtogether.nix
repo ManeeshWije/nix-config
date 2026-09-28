@@ -155,7 +155,7 @@
           serviceName = "watchtogether-pot-provider";
 
           image = "brainicism/bgutil-ytdlp-pot-provider:latest";
-          pull = "missing";
+          pull = "always";
 
           ports = [
             "127.0.0.1:4416:4416"

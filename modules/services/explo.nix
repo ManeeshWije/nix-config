@@ -54,7 +54,7 @@
       containers.explo = {
         serviceName = "explo";
         image = "ghcr.io/lumepart/explo:latest";
-        pull = "missing";
+        pull = "always";
 
         environment = {
           PUID = "2000";
