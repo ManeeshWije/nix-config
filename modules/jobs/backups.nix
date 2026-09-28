@@ -121,11 +121,13 @@ in {
       };
 
       # The existing NFS mount maps writes to Gargantua's storage user.
-      # Mirror directories, symlinks and timestamps without trying to set
-      # source ownership/permissions. Remove destination-only files.
+      # Keep destination ownership with storage and ensure it can traverse
+      # and update even read-only source directories (e.g. Nix store paths).
+      # --perms also repairs modes on directories from earlier runs.
       script = ''
         ${pkgs.rsync}/bin/rsync \
           --recursive --links --times --delete \
+          --perms --chmod=Du+rwx,Fu+rw \
           /var/lib/ /storage/tars/
       '';
     };
