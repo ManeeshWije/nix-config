@@ -108,7 +108,7 @@ in {
     ];
 
     systemd.services.backup-tars-to-gargantua = {
-      description = "Copy Tars /var/lib to Gargantua /storage/tars";
+      description = "Mirror Tars /var/lib to Gargantua /storage/tars";
       wants = ["network-online.target"];
       after = ["network-online.target"];
       unitConfig.RequiresMountsFor = ["/storage/tars"];
@@ -121,11 +121,11 @@ in {
       };
 
       # The existing NFS mount maps writes to Gargantua's storage user.
-      # Copy directories, symlinks and timestamps without trying to set
-      # source ownership/permissions or deleting destination-only files.
+      # Mirror directories, symlinks and timestamps without trying to set
+      # source ownership/permissions. Remove destination-only files.
       script = ''
         ${pkgs.rsync}/bin/rsync \
-          --recursive --links --times \
+          --recursive --links --times --delete \
           /var/lib/ /storage/tars/
       '';
     };
