@@ -6,7 +6,7 @@
     ...
   }: let
     # bookorbitImage = "ghcr.io/bookorbit/bookorbit:2.5.0";
-    bookorbitImage = "ghcr.io/bookorbit/bookorbit:sha-55110d5b449db7e471d2a8e1ba370c15fb3cb018";
+    bookorbitImage = "ghcr.io/bookorbit/bookorbit:latest";
     postgresImage = "pgvector/pgvector:pg18";
   in {
     #
