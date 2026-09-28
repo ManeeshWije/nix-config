@@ -19,7 +19,7 @@
       seerr
       bookorbit
       downtify
-      explo
+      # explo
       watchtogether
       personalwebsite
     ];

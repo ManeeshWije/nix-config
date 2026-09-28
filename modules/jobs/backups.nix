@@ -93,15 +93,52 @@
     };
   };
 in {
-  flake.nixosModules.backup-tars = mkBackup {
-    name = "backup-tars";
-    source = "/var/lib";
+  flake.nixosModules.backup-tars = {pkgs, ...}: {
+    imports = [
+      (mkBackup {
+        name = "backup-tars";
+        source = "/var/lib";
 
-    bucket = "wijeproject-backups";
-    prefix = "tars/var-lib";
-    region = "us-east-2";
+        bucket = "wijeproject-backups";
+        prefix = "tars/var-lib";
+        region = "us-east-2";
 
-    schedule = "*-*-* 03:00:00";
+        schedule = "Sun *-*-* 03:00:00";
+      })
+    ];
+
+    systemd.services.backup-tars-to-gargantua = {
+      description = "Copy Tars /var/lib to Gargantua /storage/tars";
+      wants = ["network-online.target"];
+      after = ["network-online.target"];
+      unitConfig.RequiresMountsFor = ["/storage/tars"];
+
+      serviceConfig = {
+        Type = "oneshot";
+        User = "root";
+        Nice = 10;
+        IOSchedulingClass = "idle";
+      };
+
+      # The existing NFS mount maps writes to Gargantua's storage user.
+      # Copy directories, symlinks and timestamps without trying to set
+      # source ownership/permissions or deleting destination-only files.
+      script = ''
+        ${pkgs.rsync}/bin/rsync \
+          --recursive --links --times \
+          /var/lib/ /storage/tars/
+      '';
+    };
+
+    systemd.timers.backup-tars-to-gargantua = {
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnCalendar = "*-*-* 00:00:00";
+        Persistent = true;
+        RandomizedDelaySec = 0;
+        Unit = "backup-tars-to-gargantua.service";
+      };
+    };
   };
 
   flake.nixosModules.backup-gargantua = mkBackup {
@@ -116,6 +153,7 @@ in {
       "/nix-build/**"
     ];
 
-    schedule = "*-*-* 04:00:00";
+    # schedule = "*-*-* 04:00:00";
+    schedule = "Sun *-*-* 04:00:00";
   };
 }

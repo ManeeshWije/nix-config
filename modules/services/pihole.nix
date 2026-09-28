@@ -6,8 +6,8 @@
       settings = {
         dns = {
           upstreams = [
-            "9.9.9.9"
             "1.1.1.1"
+            "9.9.9.9"
           ];
         };
 
@@ -17,24 +17,24 @@
       };
 
       lists = [
-        {
-          url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
-          type = "block";
-          enabled = true;
-          description = "HaGeZi Pro";
-        }
+        # {
+        #   url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
+        #   type = "block";
+        #   enabled = true;
+        #   description = "HaGeZi Pro";
+        # }
         {
           url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
           type = "block";
           enabled = true;
           description = "Steven Black's HOSTS";
         }
-        {
-          url = "https://media.githubusercontent.com/media/zachlagden/Pi-hole-Optimized-Blocklists/main/lists/all_domains.txt";
-          type = "block";
-          enabled = true;
-          description = "Optimized";
-        }
+        # {
+        #   url = "https://media.githubusercontent.com/media/zachlagden/Pi-hole-Optimized-Blocklists/main/lists/all_domains.txt";
+        #   type = "block";
+        #   enabled = true;
+        #   description = "Optimized";
+        # }
       ];
     };
 
