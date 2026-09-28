@@ -43,6 +43,7 @@
 
         entryPoints = [
           "websecure"
+          "websecure-ext"
         ];
 
         service = "downtify";
