@@ -3,7 +3,7 @@
     # First create a local admin under Settings > Users, then set this to false.
     # Shelfmark cannot bootstrap an admin with AUTH_METHOD=builtin enabled.
     # Setup is only exposed through the LAN/VPN entry point.
-    setupMode = true;
+    setupMode = false;
   in {
     virtualisation.oci-containers = {
       backend = "docker";
@@ -31,8 +31,6 @@
           FILE_ORGANIZATION = "organize";
           TEMPLATE_ORGANIZE = "{Author}/{Title} ({Year})/{Author} - {Title}";
           CALIBRE_WEB_URL = "https://books.wijeproject.com";
-          SEARCH_MODE = "universal";
-          METADATA_PROVIDER = "openlibrary";
         };
 
         volumes = [
