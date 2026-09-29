@@ -18,6 +18,7 @@
       flaresolverr
       seerr
       bookorbit
+      shelfmark
       downtify
       # explo
       watchtogether
