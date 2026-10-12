@@ -18,7 +18,7 @@
                   };
                   to = [
                     {
-                      key_code = "left_gui";
+                      key_code = "left_command";
                       repeat = true;
                     }
                   ];
@@ -26,8 +26,8 @@
                     {
                       type = "frontmost_application_unless";
                       bundle_identifiers = [
-                        "com.mitchellh.ghostty"
-                        "com.raphaelamorim.rio"
+                        "^com\\.mitchellh\\.ghostty$"
+                        "^com\\.raphaelamorim\\.rio$"
                       ];
                     }
                   ];
@@ -48,8 +48,45 @@
                     {
                       type = "frontmost_application_if";
                       bundle_identifiers = [
-                        "com.mitchellh.ghostty"
-                        "com.raphaelamorim.rio"
+                        "^com\\.mitchellh\\.ghostty$"
+                        "^com\\.raphaelamorim\\.rio$"
+                      ];
+                    }
+                  ];
+                }
+              ];
+            }
+
+            {
+              description = "Corne Ctrl to Cmd outside terminals";
+              manipulators = [
+                {
+                  type = "basic";
+                  from = {
+                    key_code = "left_control";
+                    modifiers.optional = ["any"];
+                  };
+                  to = [
+                    {
+                      key_code = "left_command";
+                    }
+                  ];
+                  conditions = [
+                    {
+                      type = "device_if";
+                      identifiers = [
+                        {
+                          vendor_id = 7504;
+                          product_id = 24926;
+                          is_keyboard = true;
+                        }
+                      ];
+                    }
+                    {
+                      type = "frontmost_application_unless";
+                      bundle_identifiers = [
+                        "^com\\.mitchellh\\.ghostty$"
+                        "^com\\.raphaelamorim\\.rio$"
                       ];
                     }
                   ];
