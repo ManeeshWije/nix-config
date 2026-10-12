@@ -2,8 +2,8 @@
   flake.nixosModules.endurance = {pkgs, ...}: {
     imports = with inputs.self.nixosModules; [
       user
-      niri
       noctalia-greeter
+      umbriel
       sshd
       docker
       audio

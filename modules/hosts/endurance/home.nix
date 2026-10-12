@@ -5,7 +5,7 @@
       firefox
       neovim
       fonts
-      niriConfig
+      umbrielConfig
       noctalia
       ghostty
       yaziConfig

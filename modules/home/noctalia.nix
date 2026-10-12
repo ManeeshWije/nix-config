@@ -16,6 +16,7 @@
           mode = "dark";
           source = "wallpaper";
           wallpaper_scheme = "m3-content";
+          templates.builtin_ids = ["umbriel"];
         };
 
         hooks.theme_mode_changed = ''
@@ -24,6 +25,12 @@
 
         nightlight = {
           enabled = true;
+        };
+
+        shell.screenshot = {
+          save_to_file = true;
+          directory = "~/syncthing/screenshots";
+          filename_pattern = "Screenshot from %Y-%m-%d %H-%M-%S";
         };
 
         idle.behavior = {
