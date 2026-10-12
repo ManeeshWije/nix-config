@@ -97,8 +97,8 @@ _: {
       ];
 
       input = {
-        mod-key = "Super";
-        mod-key-nested = "Alt";
+        mod-key = "Alt";
+        mod-key-nested = "Super";
 
         focus-follows-mouse.enable = true;
 
