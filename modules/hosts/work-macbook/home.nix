@@ -5,6 +5,7 @@
       neovim
       ghostty
       yabai
+      aerospace
       karabiner
       yaziConfig
       fonts

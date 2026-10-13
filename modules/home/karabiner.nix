@@ -7,8 +7,9 @@
           selected = true;
 
           complex_modifications.rules = [
+            # this is for non corne keyboards aka built in
             {
-              description = "Caps to cmd unless in terminal, then ctrl";
+              description = "Caps Lock to Cmd outside terminals, Ctrl inside";
               manipulators = [
                 {
                   type = "basic";
@@ -17,10 +18,7 @@
                     modifiers.optional = ["any"];
                   };
                   to = [
-                    {
-                      key_code = "left_command";
-                      repeat = true;
-                    }
+                    {key_code = "left_command";}
                   ];
                   conditions = [
                     {
@@ -39,10 +37,7 @@
                     modifiers.optional = ["any"];
                   };
                   to = [
-                    {
-                      key_code = "left_control";
-                      repeat = true;
-                    }
+                    {key_code = "left_control";}
                   ];
                   conditions = [
                     {
@@ -57,8 +52,9 @@
               ];
             }
 
+            # this is for corne keyboard as its mapping doesnt have a caps lock so the above wont work
             {
-              description = "Corne Ctrl to Cmd outside terminals";
+              description = "Left Ctrl to Cmd outside terminals";
               manipulators = [
                 {
                   type = "basic";
@@ -67,21 +63,9 @@
                     modifiers.optional = ["any"];
                   };
                   to = [
-                    {
-                      key_code = "left_command";
-                    }
+                    {key_code = "left_command";}
                   ];
                   conditions = [
-                    {
-                      type = "device_if";
-                      identifiers = [
-                        {
-                          vendor_id = 7504;
-                          product_id = 24926;
-                          is_keyboard = true;
-                        }
-                      ];
-                    }
                     {
                       type = "frontmost_application_unless";
                       bundle_identifiers = [
@@ -90,22 +74,6 @@
                       ];
                     }
                   ];
-                }
-              ];
-            }
-          ];
-
-          devices = [
-            {
-              identifiers = {
-                is_keyboard = true;
-                product_id = 833;
-                vendor_id = 1452;
-              };
-              simple_modifications = [
-                {
-                  from.key_code = "caps_lock";
-                  to = [{key_code = "left_control";}];
                 }
               ];
             }
