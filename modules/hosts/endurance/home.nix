@@ -8,7 +8,6 @@
       umbrielConfig
       noctalia
       ghostty
-      yaziConfig
       tableplus
       lunar-client
     ];

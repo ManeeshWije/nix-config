@@ -4,10 +4,8 @@
       shell
       neovim
       ghostty
-      yabai
       aerospace
       karabiner
-      yaziConfig
       fonts
       firefox
       tableplus
