@@ -63,8 +63,20 @@
           keyboard = {
             repeat_delay = 230;
             repeat_rate = 40;
+            options = "caps:ctrl_modifier";
           };
+
+          touchpad = {
+            natural_scroll = true;
+            tap = true;
+          };
+
+          mouse = {
+            natural_scroll = false;
+          };
+
           focus.follows_mouse = true;
+
           cursor = {
             theme = "Bibata-Modern-Ice";
             size = 24;
