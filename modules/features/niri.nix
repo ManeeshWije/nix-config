@@ -97,14 +97,27 @@ _: {
       ];
 
       input = {
-        mod-key = "Alt";
-        mod-key-nested = "Super";
-
-        focus-follows-mouse.enable = true;
-
         keyboard = {
-          repeat-delay = 230;
-          repeat-rate = 40;
+          repeat_delay = 230;
+          repeat_rate = 40;
+
+          options = "caps:ctrl_modifier";
+        };
+
+        touchpad = {
+          natural_scroll = true;
+          tap = true;
+        };
+
+        mouse = {
+          natural_scroll = false;
+        };
+
+        focus.follows_mouse = true;
+
+        cursor = {
+          theme = "Bibata-Modern-Ice";
+          size = 24;
         };
       };
 
