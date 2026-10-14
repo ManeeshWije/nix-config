@@ -10,6 +10,7 @@
       runtimePkgs = with pkgs; [
         lua-language-server
         typescript-go
+        typescript-language-server
         oxlint
         unstable.oxfmt
         unstable.prettier

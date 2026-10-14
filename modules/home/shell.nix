@@ -25,6 +25,7 @@ _: {
       tree-sitter
       yazi
       tmux
+      tmux-sessionizer
       poppler
       resvg
       ffmpeg
