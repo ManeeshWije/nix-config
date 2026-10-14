@@ -13,10 +13,13 @@
         oxlint
         unstable.oxfmt
         unstable.prettier
+        sql-formatter
+        marksman
         vscode-langservers-extracted
         rust-analyzer
         rustfmt
         docker-language-server
+        postgres-language-server
         bash-language-server
         nixd
         pyright
@@ -27,7 +30,7 @@
 
       package = pkgs.unstable.neovim-unwrapped;
 
-      settings.config_directory = "${lib.cleanSource (dfRoot + /nvim-native)}";
+      settings.config_directory = "${lib.cleanSource (dfRoot + /nvim)}";
     };
   };
 }
