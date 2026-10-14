@@ -1,11 +1,17 @@
-_: {
+{inputs, ...}: {
   flake.homeModules.firefox = {
     lib,
     pkgs,
     ...
-  }: {
+  }: let
+    firefoxDarwin = pkgs.extend inputs.nixpkgs-firefox-darwin.overlay;
+  in {
     home.packages = [
-      pkgs.firefox-devedition
+      (
+        if pkgs.stdenv.hostPlatform.isDarwin
+        then firefoxDarwin.firefox-devedition-bin
+        else pkgs.firefox-devedition
+      )
     ];
 
     xdg.desktopEntries = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
@@ -16,7 +22,6 @@ _: {
 
         categories = ["Network" "WebBrowser"];
         genericName = "Web Browser";
-
         mimeType = [
           "text/html"
           "text/xml"
