@@ -35,11 +35,11 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1791999181,
-        "narHash": "sha256-u+Pd08Ju4Lb/xMwKtmc6PhRAUy27sbeYk6TpBARjPqc=",
+        "lastModified": 1792000590,
+        "narHash": "sha256-PxtSJ3iOTXidM0Z33K2xWDhgpqsX/616bx5S9yj60mY=",
         "owner": "ManeeshWije",
         "repo": "dotfiles",
-        "rev": "1704ca239fb346331f4b656f2b24bfb672e90e4d",
+        "rev": "55dd669fb5352ec169d0f37686cca3655c46c446",
         "type": "github"
       },
       "original": {
