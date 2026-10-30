@@ -8,7 +8,7 @@
       traefik
       wg-easy
       sops
-      minecraft
+      # minecraft
       backup-tars
       jellyfin
       qbittorrent
