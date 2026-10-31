@@ -114,45 +114,45 @@
 
         keybinds = {
           # Applications / launcher
-          "Mod+T" = "spawn:ghostty";
-          "Mod+M" = "spawn:pcmanfm";
-          "Mod+D" = "spawn:noctalia msg panel-toggle launcher";
-          "Mod+I" = "spawn:firefox-devedition";
-          "Mod+Shift+D" = "spawn:noctalia msg panel-toggle clipboard";
+          "Mod+T" = "spawn ghostty";
+          "Mod+M" = "spawn pcmanfm";
+          "Mod+D" = "spawn noctalia msg panel-toggle launcher";
+          "Mod+I" = "spawn firefox-devedition";
+          "Mod+Shift+D" = "spawn noctalia msg panel-toggle clipboard";
           "Mod+Shift+Slash" = "cheatsheet-toggle";
 
           # Volume
           "XF86AudioRaiseVolume" = {
-            action = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ -l 1.0";
+            action = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ -l 1.0";
             allow_when_locked = true;
           };
           "XF86AudioLowerVolume" = {
-            action = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+            action = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
             allow_when_locked = true;
           };
           "XF86AudioMute" = {
-            action = "spawn:wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            action = "spawn wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             allow_when_locked = true;
           };
           "XF86AudioMicMute" = {
-            action = "spawn:wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+            action = "spawn wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
             allow_when_locked = true;
           };
 
           # Media controls
-          "XF86AudioPlay" = "spawn:playerctl play-pause";
-          "XF86AudioPause" = "spawn:playerctl play-pause";
-          "XF86AudioStop" = "spawn:playerctl stop";
-          "XF86AudioPrev" = "spawn:playerctl previous";
-          "XF86AudioNext" = "spawn:playerctl next";
+          "XF86AudioPlay" = "spawn playerctl play-pause";
+          "XF86AudioPause" = "spawn playerctl play-pause";
+          "XF86AudioStop" = "spawn playerctl stop";
+          "XF86AudioPrev" = "spawn playerctl previous";
+          "XF86AudioNext" = "spawn playerctl next";
 
           # Brightness
           "XF86MonBrightnessUp" = {
-            action = "spawn:brightnessctl --class=backlight set +10%";
+            action = "spawn brightnessctl --class=backlight set +10%";
             allow_when_locked = true;
           };
           "XF86MonBrightnessDown" = {
-            action = "spawn:brightnessctl --class=backlight set 10%-";
+            action = "spawn brightnessctl --class=backlight set 10%-";
             allow_when_locked = true;
           };
 
@@ -190,26 +190,26 @@
           "Mod+P" = "workspace-previous";
 
           # Workspaces 1-9
-          "Mod+1" = "workspace-switch:1";
-          "Mod+2" = "workspace-switch:2";
-          "Mod+3" = "workspace-switch:3";
-          "Mod+4" = "workspace-switch:4";
-          "Mod+5" = "workspace-switch:5";
-          "Mod+6" = "workspace-switch:6";
-          "Mod+7" = "workspace-switch:7";
-          "Mod+8" = "workspace-switch:8";
-          "Mod+9" = "workspace-switch:9";
+          "Mod+1" = "workspace-switch 1";
+          "Mod+2" = "workspace-switch 2";
+          "Mod+3" = "workspace-switch 3";
+          "Mod+4" = "workspace-switch 4";
+          "Mod+5" = "workspace-switch 5";
+          "Mod+6" = "workspace-switch 6";
+          "Mod+7" = "workspace-switch 7";
+          "Mod+8" = "workspace-switch 8";
+          "Mod+9" = "workspace-switch 9";
 
           # Move window to workspace 1-9
-          "Mod+Shift+1" = "window-move-to-workspace:1";
-          "Mod+Shift+2" = "window-move-to-workspace:2";
-          "Mod+Shift+3" = "window-move-to-workspace:3";
-          "Mod+Shift+4" = "window-move-to-workspace:4";
-          "Mod+Shift+5" = "window-move-to-workspace:5";
-          "Mod+Shift+6" = "window-move-to-workspace:6";
-          "Mod+Shift+7" = "window-move-to-workspace:7";
-          "Mod+Shift+8" = "window-move-to-workspace:8";
-          "Mod+Shift+9" = "window-move-to-workspace:9";
+          "Mod+Shift+1" = "window-move-to-workspace 1";
+          "Mod+Shift+2" = "window-move-to-workspace 2";
+          "Mod+Shift+3" = "window-move-to-workspace 3";
+          "Mod+Shift+4" = "window-move-to-workspace 4";
+          "Mod+Shift+5" = "window-move-to-workspace 5";
+          "Mod+Shift+6" = "window-move-to-workspace 6";
+          "Mod+Shift+7" = "window-move-to-workspace 7";
+          "Mod+Shift+8" = "window-move-to-workspace 8";
+          "Mod+Shift+9" = "window-move-to-workspace 9";
 
           # Maximize / fullscreen
           "Mod+F" = "window-toggle-maximize";
@@ -220,9 +220,9 @@
           "Mod+Shift+Space" = "window-focus-switch-floating";
 
           # Screenshots via Noctalia
-          "Print" = "spawn:noctalia msg screenshot-region";
-          "Mod+Shift+S" = "spawn:noctalia msg screenshot-region";
-          "Mod+S" = "spawn:noctalia msg screenshot-fullscreen";
+          "Print" = "spawn noctalia msg screenshot-region";
+          "Mod+Shift+S" = "spawn noctalia msg screenshot-region";
+          "Mod+S" = "spawn noctalia msg screenshot-fullscreen";
 
           # Keyboard shortcut inhibition
           "Mod+Escape" = {
