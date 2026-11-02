@@ -36,7 +36,7 @@
     };
 
     systemd.services.${name} = {
-      description = "Backup ${source} to S3";
+      description = "Mirror ${source} to S3";
 
       wants = [
         "network-online.target"
@@ -57,8 +57,10 @@
         IOSchedulingClass = "idle";
       };
 
+      # Keep the destination current, including removing files deleted locally.
+      # Unchanged files are skipped; excluded paths are left untouched.
       script = ''
-        ${pkgs.rclone}/bin/rclone copy \
+        ${pkgs.rclone}/bin/rclone sync \
           ${lib.escapeShellArg source} \
           ${lib.escapeShellArg "aws:${bucket}/${prefix}"} \
           ${lib.concatMapStringsSep " " (
