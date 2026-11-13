@@ -24,7 +24,7 @@
       brightnessctl
       wl-clipboard
       pcmanfm
-      vesktop
+      unstable.vesktop
       localsend
       proton-authenticator
       proton-vpn

@@ -34,7 +34,7 @@ _: {
       sops
       zip
       unzip
-      unstable.codex
+      codex
 
       nixd
       alejandra
