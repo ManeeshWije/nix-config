@@ -68,6 +68,7 @@
           )
           excludes} \
           --fast-list \
+          --delete-excluded \
           --transfers 4 \
           --checkers 8 \
           --create-empty-src-dirs \
@@ -106,6 +107,17 @@ in {
         region = "us-east-2";
 
         schedule = "Sun *-*-* 03:00:00";
+
+        excludes = [
+          # Kernel-managed NFS runtime files
+          "/nfs/rpc_pipefs/**"
+
+          # Transient SQLite files
+          "**/*.db-shm"
+
+          # Docker runtime filesystems
+          "/docker/rootfs/**"
+        ];
       })
     ];
 
