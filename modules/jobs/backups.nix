@@ -117,6 +117,7 @@ in {
 
           # Docker runtime filesystems
           "/docker/rootfs/**"
+          "/var/lib/docker/"
         ];
       })
     ];
