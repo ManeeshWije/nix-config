@@ -75,7 +75,7 @@
             natural_scroll = false;
           };
 
-          focus.follows_mouse = true;
+          focus.follows_mouse = "always";
 
           cursor = {
             theme = "Bibata-Modern-Ice";
