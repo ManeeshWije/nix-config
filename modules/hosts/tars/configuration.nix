@@ -23,6 +23,7 @@
       # explo
       watchtogether
       personalwebsite
+      cleanuparr
     ];
 
     # Bootloader.
