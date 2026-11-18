@@ -115,8 +115,8 @@ in {
           # Transient SQLite files
           "**/*.db-shm"
 
-          "/docker**"
-          "/var/lib/docker/"
+          "/docker/**"
+          "/var/lib/docker/*"
         ];
       })
     ];
